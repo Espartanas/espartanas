@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Input, Text} from 'native-base';
+import {Checkbox, HStack, Input, Text, VStack} from 'native-base';
 import {Header} from '../../components/molecule/Header.molecule';
 import Screen from '../../components/molecule/Screen.molecule';
 import Main from '../../components/molecule/Main.molecule';
@@ -8,7 +8,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {RegisterFormData, RegisterSchema} from '../../utils/resolvers';
 import Button from '../../components/molecule/Button.molecule';
-import {maskDate, maskLetters, maskPhone} from '../../utils/masks';
+import {empty, maskDate, maskLetters, maskPhone} from '../../utils/masks';
 
 export function Register() {
   const [password, setPassword] = useState('');
@@ -20,6 +20,11 @@ export function Register() {
     number: '',
     symbol: '',
     confirmPassword: '',
+  });
+
+  const [checkbox, setCheckbox] = useState({
+    terms: false,
+    privacy: false,
   });
 
   const validatePassword = () => {
@@ -85,6 +90,14 @@ export function Register() {
   const onSubmit = async (data: RegisterFormData) => {
     console.log(data);
   };
+
+  function handleSidableButton() {
+    if (checkbox.terms && checkbox.privacy) {
+      return true;
+    }
+
+    return false;
+  }
 
   useEffect(() => {
     validatePassword();
@@ -152,7 +165,7 @@ export function Register() {
               placeholder="Telefone"
               onChangeText={text => onChange(maskPhone(text))}
               value={value}
-              maxLength={14}
+              maxLength={15}
             />
           )}
           name="phone"
@@ -237,7 +250,48 @@ export function Register() {
           {passwordErrors?.confirmPassword}
         </Text>
 
-        <Button onPress={handleSubmit(onSubmit)} text="Cadastrar" />
+        <VStack>
+          <HStack mb={'10px'} alignItems={'center'}>
+            <Checkbox
+              onChange={check =>
+                setCheckbox({
+                  ...checkbox,
+                  terms: check,
+                })
+              }
+              mr={'5px'}
+              value="1"
+              accessibilityLabel="Checkbox"
+              aria-label="Checkbox"
+            />
+            <Text>Concordo com os termos e serviços Espartanas.</Text>
+          </HStack>
+
+          <HStack mb={'10px'}>
+            <Checkbox
+              onChange={check =>
+                setCheckbox({
+                  ...checkbox,
+                  privacy: check,
+                })
+              }
+              mr={'5px'}
+              value="2"
+              accessibilityLabel="Checkbox"
+              aria-label="Checkbox"
+            />
+            <Text>
+              Concordo com o processamento dos meus dados pessoais conforme
+              descrito acima e melhor explicado na Política de Privacidade
+            </Text>
+          </HStack>
+        </VStack>
+
+        <Button
+          disabled={handleSidableButton()}
+          onPress={handleSubmit(onSubmit)}
+          text="Cadastrar"
+        />
       </Main>
 
       <Footer />
