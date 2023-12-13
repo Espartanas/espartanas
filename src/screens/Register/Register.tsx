@@ -8,7 +8,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {RegisterFormData, RegisterSchema} from '../../utils/resolvers';
 import Button from '../../components/molecule/Button.molecule';
-import {empty, maskDate, maskLetters, maskPhone} from '../../utils/masks';
+import {maskDate, maskLetters, maskPhone} from '../../utils/masks';
 
 export function Register() {
   const [password, setPassword] = useState('');
@@ -22,10 +22,9 @@ export function Register() {
     confirmPassword: '',
   });
 
-  const [checkbox, setCheckbox] = useState({
-    terms: false,
-    privacy: false,
-  });
+  const [terms, setTerms] = useState(false);
+
+  const [privacy, setPrivacy] = useState(false);
 
   const validatePassword = () => {
     const newErrors = {
@@ -92,9 +91,11 @@ export function Register() {
   };
 
   function handleSidableButton() {
-    if (checkbox.terms && checkbox.privacy) {
+    if (!terms || !privacy) {
+      console.log(2);
       return true;
     }
+    console.log(3);
 
     return false;
   }
@@ -253,12 +254,7 @@ export function Register() {
         <VStack>
           <HStack mb={'10px'} alignItems={'center'}>
             <Checkbox
-              onChange={check =>
-                setCheckbox({
-                  ...checkbox,
-                  terms: check,
-                })
-              }
+              onChange={check => setTerms(check)}
               mr={'5px'}
               value="1"
               accessibilityLabel="Checkbox"
@@ -269,12 +265,7 @@ export function Register() {
 
           <HStack mb={'10px'}>
             <Checkbox
-              onChange={check =>
-                setCheckbox({
-                  ...checkbox,
-                  privacy: check,
-                })
-              }
+              onChange={check => setPrivacy(check)}
               mr={'5px'}
               value="2"
               accessibilityLabel="Checkbox"
@@ -288,6 +279,8 @@ export function Register() {
         </VStack>
 
         <Button
+          variant={handleSidableButton() ? true : false}
+          borderColorVariant={handleSidableButton() ? 'gray.600' : 'blue.800'}
           disabled={handleSidableButton()}
           onPress={handleSubmit(onSubmit)}
           text="Cadastrar"
