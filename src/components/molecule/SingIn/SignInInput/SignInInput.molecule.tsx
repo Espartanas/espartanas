@@ -23,17 +23,21 @@ export function SignInInput() {
     const email: string = (await CustomAsyncStorage.getItem(
       '@user_email',
     )) as string;
+
     const password: string = (await CustomAsyncStorage.getItem(
       '@user_password',
     )) as string;
+
     const isPermitedFaceID: string = JSON.parse(
       (await CustomAsyncStorage.getItem('@switch_face_id')) as string,
     );
 
-    setLogin({
-      email,
-      password,
-    });
+    if (isPermitedFaceID) {
+      setLogin({
+        email,
+        password,
+      });
+    }
 
     const configs = {
       title: 'Autenticação Biométrica',
@@ -53,20 +57,19 @@ export function SignInInput() {
     }
   }
 
-  function signIn({email, password}: {email: string; password: string}) {
-    console.log(email, password);
+  async function signIn({email, password}: {email: string; password: string}) {
     api
       .post('/auth/login', {email, password})
       .then(res => {
-        console.log(res.data.user);
-        // setUser(res.data.user);
-        // setToken(res.data.access_token);
-        // setLoginError('');
+        console.log('login', res.data);
+        setUser(res.data.user);
+        setToken(res.data.access_token);
+        setLoginError('');
         setAuth(true);
       })
       .catch(error => {
         console.log(error.response.data);
-        setLoginError(error.response.data.message);
+        setLoginError(error.response.data.message[0]);
       });
   }
 

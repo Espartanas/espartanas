@@ -33,7 +33,7 @@ function SignFaceId() {
         console.log('TouchID.isSupported', supported);
       })
       .catch(error => {
-        console.error(error);
+        console.error('error toutch id:', error);
       });
   }, [supported]);
 

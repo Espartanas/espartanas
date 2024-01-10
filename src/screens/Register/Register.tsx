@@ -9,6 +9,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {RegisterFormData, RegisterSchema} from '../../utils/resolvers';
 import Button from '../../components/molecule/Button.molecule';
 import {maskDate, maskLetters, maskPhone} from '../../utils/masks';
+import api from '../../services/api';
 
 export function Register() {
   const [password, setPassword] = useState('');
@@ -87,15 +88,22 @@ export function Register() {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    console.log(data);
+    const body = {
+      ...data,
+      password,
+      acceptTerms: !handleDisableButton(),
+    };
+
+    api
+      .post('/user', body)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err.response.data));
   };
 
-  function handleSidableButton() {
+  function handleDisableButton() {
     if (!terms || !privacy) {
-      console.log(2);
       return true;
     }
-    console.log(3);
 
     return false;
   }
@@ -279,9 +287,9 @@ export function Register() {
         </VStack>
 
         <Button
-          variant={handleSidableButton() ? true : false}
-          borderColorVariant={handleSidableButton() ? 'gray.600' : 'blue.800'}
-          disabled={handleSidableButton()}
+          variant={handleDisableButton() ? true : false}
+          borderColorVariant={handleDisableButton() ? 'gray.600' : 'blue.800'}
+          disabled={handleDisableButton()}
           onPress={handleSubmit(onSubmit)}
           text="Cadastrar"
         />
