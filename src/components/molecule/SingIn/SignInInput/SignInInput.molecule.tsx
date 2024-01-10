@@ -99,6 +99,7 @@ export function SignInInput() {
       <Input
         borderWidth={0}
         borderBottomWidth={1}
+        type="password"
         borderColor={'gray.600'}
         placeholder="Senha"
         onChangeText={text => setLogin({...login, password: text})}
