@@ -1,3 +1,4 @@
+import React from 'react';
 import {View} from 'native-base';
 import {Path, Svg} from 'react-native-svg';
 
