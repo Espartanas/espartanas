@@ -91,6 +91,7 @@ export function Register() {
     const body = {
       ...data,
       password,
+      member: false,
       acceptTerms: !handleDisableButton(),
     };
 
