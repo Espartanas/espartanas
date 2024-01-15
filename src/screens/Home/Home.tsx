@@ -1,8 +1,8 @@
 import React from 'react';
-import {Box, Text} from 'native-base';
 import {useAuth} from '../../context/authContext';
 import {ProfileHeader} from '../../components/molecule/Home/ProfileHeader/ProfileHeader';
 import Screen from '../../components/molecule/Screen.molecule';
+import {Plans} from '../../components/molecule/Home/Plans/Plans';
 
 export function Home() {
   const {user} = useAuth();
@@ -13,7 +13,7 @@ export function Home() {
     <Screen bg={'white'}>
       <ProfileHeader user={user} />
 
-      <Text>Seja membro.</Text>
+      <Plans />
     </Screen>
   );
 }
