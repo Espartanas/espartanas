@@ -8,7 +8,6 @@ type Props = {
 };
 
 export function ProfileHeader({user}: Props) {
-  console.log(user);
   const navigation = useNavigation();
 
   return (

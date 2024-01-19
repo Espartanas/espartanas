@@ -14,13 +14,14 @@ export function Home() {
   console.log(user);
   const navigation = useNavigation();
 
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState(10);
 
-  console.log(user);
+  const buttonDisabled =
+    category === 0 || category === 1 || category === 2 ? false : true;
 
   return (
     <Screen flex={1} bg={'white'} paddingX={'0px'}>
-      <ProfileHeader user={user} />
+      {/* <ProfileHeader user={user} /> */}
       <Text px={'20px'} mt={'20px'} fontSize={'18px'}>
         Bem vindo{' '}
         <Text bold>
@@ -43,6 +44,7 @@ export function Home() {
       />
 
       <Pressable
+        disabled={buttonDisabled}
         mx={'20px'}
         mb={'40px'}
         alignItems={'center'}

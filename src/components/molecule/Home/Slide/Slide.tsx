@@ -17,7 +17,7 @@ export default function Slide({item, category, setCategory}: Props) {
   return (
     <Pressable
       alignItems={'center'}
-      mt={'40px'}
+      my={'40px'}
       px={'20px'}
       bg={'gray.50'}
       borderRadius={'10px'}
