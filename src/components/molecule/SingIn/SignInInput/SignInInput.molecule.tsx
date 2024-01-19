@@ -58,6 +58,7 @@ export function SignInInput() {
   }
 
   async function signIn({email, password}: {email: string; password: string}) {
+    console.log(email, password);
     api
       .post('/auth/login', {email, password})
       .then(res => {

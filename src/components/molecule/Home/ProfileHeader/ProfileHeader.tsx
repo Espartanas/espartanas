@@ -12,7 +12,7 @@ export function ProfileHeader({user}: Props) {
   const navigation = useNavigation();
 
   return (
-    <HStack justifyContent={'space-between'}>
+    <HStack px={'20px'} justifyContent={'space-between'}>
       <HStack mt={'10px'} alignItems={'center'}>
         <Box>
           <Avatar
@@ -20,7 +20,7 @@ export function ProfileHeader({user}: Props) {
             size={'50px'}
             my={'10px'}
             source={{
-              uri: user?.photo ? user?.photo : 'https://i.pravatar.cc/2032',
+              uri: user?.photo ? user?.photo : 'https://i.pravatar.cc/20322',
             }}
           />
         </Box>
