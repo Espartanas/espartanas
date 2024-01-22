@@ -22,7 +22,7 @@ export default function Slide({item, category, setCategory}: Props) {
       bg={'gray.50'}
       borderRadius={'10px'}
       borderWidth={'1px'}
-      borderColor={category === item.value ? 'green.500' : 'rgba(0,0,0,0.2)'}
+      borderColor={category === item.value ? 'blue.800' : 'rgba(0,0,0,0.2)'}
       py={'30px'}
       onPress={selectCategory}>
       <Text fontSize={'20px'} bold>

@@ -5,7 +5,7 @@ export const plans = [
     price: 20,
     string_price: '20,00/mês',
     description:
-      'Plano interessante pra quem quer degustar o app, analisar os nossos treinos, ter o nosso acompanhamento e tirar as próprias conclusões o nosso produto.',
+      'Plano interessante pra quem quer degustar o app, analisar os nossos treinos, ter o nosso acompanhamento e tirar as próprias conclusões do nosso produto.',
   },
   {
     id: 2,

@@ -51,7 +51,7 @@ export function Home() {
         justifyContent={'center'}
         h={'60px'}
         mt={'20px'}
-        bg={'green.800'}
+        bg={'blue.800'}
         borderRadius={'10px'}
         _pressed={{opacity: 0.5}}
         onPress={() => navigation.navigate('Plans' as never)}>
