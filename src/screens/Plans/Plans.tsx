@@ -1,15 +1,37 @@
 import React from 'react';
-import {AddIcon, Box, Pressable, Text, VStack} from 'native-base';
+import {AddIcon, Box, Center, Pressable, Text, VStack} from 'native-base';
 import Screen from '../../components/molecule/Screen.molecule';
 import {plans} from '../../utils/plans';
 import {useNavigation} from '@react-navigation/native';
+import {useApp} from '../../context/appContext';
+import {useQuery} from 'react-query';
+import api from '../../services/api';
 
 export default function Plans() {
   const navigation = useNavigation();
+  const {userData, setUserData} = useApp();
+
+  const {data, isLoading} = useQuery(['allPlans'], async () => {
+    const res = await api.get('/plan');
+    return res.data;
+  });
+
+  function goToPlanPayment(item: any) {
+    setUserData({...userData, plan: item.id});
+    navigation.navigate('PlanPayment' as never);
+  }
+
+  if (isLoading) return <Text>Loading!</Text>;
+
   return (
     <Screen flex={1} bg={'white'}>
-      <VStack py={'50px'} alignItems={'center'} w={'100%'}>
-        {plans.map((item, index) => (
+      <Center mt={'30px'}>
+        <Text fontSize={'18px'} bold>
+          Selecione um dos nossos planos
+        </Text>
+      </Center>
+      <VStack py={'30px'} alignItems={'center'} w={'100%'}>
+        {data.map((item: any, index: number) => (
           <Pressable
             mb={'20px'}
             alignItems={'center'}
@@ -17,27 +39,24 @@ export default function Plans() {
             borderColor={'blue.800'}
             justifyContent={'center'}
             p={'10px'}
-            h={'250px'}
+            h={'180px'}
             w={'85%'}
             borderRadius={'20px'}
             key={index}
-            onPress={() => navigation.navigate('Dashboard' as never)}
+            onPress={() => goToPlanPayment(item)}
             _pressed={{opacity: 0.5}}>
             <Text bold fontSize={'20px'}>
               {item.name}
             </Text>
-            <Text fontSize={'18px'}>R$ {item.string_price}</Text>
-            {item.mounth_discount && (
+            <Text fontSize={'18px'}>R$ {item.price},00</Text>
+            {item?.discount !== 0 && (
               <Text bold fontSize={'18px'}>
-                {item.mounth_discount}
+                {item?.discount}% de desconto
               </Text>
             )}
-            <Text mt={'20px'} textAlign={'center'} fontSize={'12px'}>
+            <Text mt={'10px'} textAlign={'center'} fontSize={'12px'}>
               {item.description}
             </Text>
-            <Box mt={'30px'}>
-              <AddIcon size={'20px'} color={'green.700'} />
-            </Box>
           </Pressable>
         ))}
       </VStack>
@@ -53,9 +72,9 @@ export default function Plans() {
         borderWidth={'1px'}
         borderColor={'blue.800'}
         _pressed={{opacity: 0.5}}
-        onPress={() => navigation.navigate('Plans' as never)}>
+        onPress={() => navigation.navigate('Dashboard' as never)}>
         <Text fontSize={'20px'} color={'blue.800'} bold>
-          Depois assino
+          Assinar depois
         </Text>
       </Pressable>
     </Screen>

@@ -1,9 +1,17 @@
-import React, {Dispatch, SetStateAction, useContext} from 'react';
+import React, {useContext} from 'react';
 import {createContext, useState} from 'react';
 
-interface AuthContext {}
+interface IUserData {
+  category: number;
+  plan: number;
+}
 
-export const AuthContext = createContext<AuthContext>({} as AuthContext);
+interface AppContext {
+  userData: IUserData;
+  setUserData: React.Dispatch<React.SetStateAction<IUserData>>;
+}
+
+export const AppContext = createContext<AppContext>({} as AppContext);
 
 // -----------------------------xxxxxxx--------------------------------
 
@@ -11,22 +19,26 @@ type Props = {
   children: JSX.Element;
 };
 
-export function AuthProvider({children}: Props) {
+export function AppProvider({children}: Props) {
+  const [userData, setUserData] = useState({
+    category: 10,
+    plan: 10,
+  } as IUserData);
   return (
-    <AuthContext.Provider
+    <AppContext.Provider
       value={
         {
           userData,
           setUserData,
-        } as AuthContext
+        } as AppContext
       }>
       {children}
-    </AuthContext.Provider>
+    </AppContext.Provider>
   );
 }
 
-export function useAuth(): AuthContext {
-  const context = useContext(AuthContext);
+export function useApp(): AppContext {
+  const context = useContext(AppContext);
 
   return context;
 }

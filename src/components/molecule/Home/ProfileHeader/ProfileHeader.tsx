@@ -31,7 +31,7 @@ export function ProfileHeader({user}: Props) {
         </Box>
       </HStack>
 
-      <Center>
+      {/* <Center>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Menu' as never);
@@ -44,7 +44,7 @@ export function ProfileHeader({user}: Props) {
             h={'50px'}
           />
         </TouchableOpacity>
-      </Center>
+      </Center> */}
     </HStack>
   );
 }

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useAuth} from '../../context/authContext';
-import {ProfileHeader} from '../../components/molecule/Home/ProfileHeader/ProfileHeader';
 import Screen from '../../components/molecule/Screen.molecule';
 import {Pressable, Text} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
@@ -8,10 +7,12 @@ import Carousel from 'react-native-snap-carousel';
 import {Dimensions} from 'react-native';
 import Slide from '../../components/molecule/Home/Slide/Slide';
 import {initialSlide} from '../../utils/initialSlide';
+import {useApp} from '../../context/appContext';
 
 export function Home() {
   const {user} = useAuth();
-  console.log(user);
+  const {userData, setUserData} = useApp();
+
   const navigation = useNavigation();
 
   const [category, setCategory] = useState(10);
@@ -19,9 +20,13 @@ export function Home() {
   const buttonDisabled =
     category === 0 || category === 1 || category === 2 ? false : true;
 
+  function goToPlanScreen() {
+    setUserData({...userData, category});
+    navigation.navigate('Plans' as never);
+  }
+
   return (
     <Screen flex={1} bg={'white'} paddingX={'0px'}>
-      {/* <ProfileHeader user={user} /> */}
       <Text px={'20px'} mt={'20px'} fontSize={'18px'}>
         Bem vindo{' '}
         <Text bold>
@@ -54,7 +59,7 @@ export function Home() {
         bg={'blue.800'}
         borderRadius={'10px'}
         _pressed={{opacity: 0.5}}
-        onPress={() => navigation.navigate('Plans' as never)}>
+        onPress={goToPlanScreen}>
         <Text fontSize={'20px'} color={'white'} bold>
           Seja uma espartana!
         </Text>
