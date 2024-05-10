@@ -20,7 +20,7 @@ export default function Button({
   variant = false,
   text,
   width = '100%',
-  borderRadius = '10px',
+  borderRadius = '5px',
   height = '48px',
   alignItems = 'center',
   justifyContent = 'center',
@@ -38,7 +38,7 @@ export default function Button({
       }}
       width={width}
       height={height}
-      bg={variant ? colors.white : 'blue.800'}
+      bg={variant ? colors.white : '#5968DF'}
       borderWidth={variant ? '1px' : 0}
       borderColor={variant ? borderColorVariant : colors.white}
       borderRadius={borderRadius}

@@ -20,14 +20,14 @@ export function Header({title, showArrowBack, showTitle, ...rest}: Props) {
       {...rest}>
       {showArrowBack ? (
         <Pressable onPress={() => navigation.goBack()}>
-          <ArrowBack />
+          <ArrowBack color={'white'} />
         </Pressable>
       ) : (
         <Text></Text>
       )}
 
       {showTitle && (
-        <Text bold fontSize={20}>
+        <Text color={'white'} bold fontSize={20}>
           {title}
         </Text>
       )}

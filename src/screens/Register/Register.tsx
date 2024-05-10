@@ -115,7 +115,7 @@ export function Register() {
   }, [password, confirmPassword]);
 
   return (
-    <Screen>
+    <Screen paddingX={'20px'} footer>
       <Header showArrowBack showTitle title="Cadastro" />
 
       <Main>
@@ -125,13 +125,14 @@ export function Register() {
             <Input
               p={'5px'}
               mb="5px"
-              borderWidth={0}
-              borderBottomWidth={1}
-              borderColor={'gray.600'}
+              borderColor={'#ffffff'}
+              bg={'#ffffff'}
+              placeholderTextColor={'gray.700'}
               placeholder="Primeiro nome"
               onChangeText={text => onChange(maskLetters(text))}
               value={value}
               maxLength={12}
+              _focus={{bg: '#ffffff'}}
             />
           )}
           name="firstName"
@@ -147,13 +148,14 @@ export function Register() {
             <Input
               p={'5px'}
               mb="5px"
-              borderWidth={0}
-              borderBottomWidth={1}
-              borderColor={'gray.600'}
+              borderColor={'#ffffff'}
+              bg={'#ffffff'}
+              placeholderTextColor={'gray.700'}
               placeholder="Último nome"
               onChangeText={text => onChange(maskLetters(text))}
               value={value}
               maxLength={12}
+              _focus={{bg: '#ffffff'}}
             />
           )}
           name="lastName"
@@ -169,13 +171,14 @@ export function Register() {
             <Input
               p={'5px'}
               mb="5px"
-              borderWidth={0}
-              borderBottomWidth={1}
-              borderColor={'gray.600'}
+              borderColor={'#ffffff'}
+              bg={'#ffffff'}
+              placeholderTextColor={'gray.700'}
               placeholder="Telefone"
               onChangeText={text => onChange(maskPhone(text))}
               value={value}
               maxLength={15}
+              _focus={{bg: '#ffffff'}}
             />
           )}
           name="phone"
@@ -191,13 +194,14 @@ export function Register() {
             <Input
               p={'5px'}
               mb="5px"
-              borderWidth={0}
-              borderBottomWidth={1}
-              borderColor={'gray.600'}
+              borderColor={'#ffffff'}
+              bg={'#ffffff'}
+              placeholderTextColor={'gray.700'}
               placeholder="Data de nascimento"
               onChangeText={text => onChange(maskDate(text))}
               value={value}
               maxLength={10}
+              _focus={{bg: '#ffffff'}}
             />
           )}
           name="birthDate"
@@ -213,12 +217,13 @@ export function Register() {
             <Input
               p={'5px'}
               mb="5px"
-              borderWidth={0}
-              borderBottomWidth={1}
-              borderColor={'gray.600'}
+              borderColor={'#ffffff'}
+              bg={'#ffffff'}
+              placeholderTextColor={'gray.700'}
               placeholder="E-mail"
               onChangeText={onChange}
               value={value}
+              _focus={{bg: '#ffffff'}}
             />
           )}
           name="email"
@@ -230,12 +235,13 @@ export function Register() {
 
         <Input
           mb="5px"
-          borderWidth={0}
-          borderBottomWidth={1}
-          borderColor={'gray.600'}
+          borderColor={'#ffffff'}
+          bg={'#ffffff'}
+          placeholderTextColor={'gray.700'}
           placeholder="Senha"
           onChangeText={handlePasswordChange}
           value={password}
+          _focus={{bg: '#ffffff'}}
         />
 
         <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>
@@ -248,12 +254,13 @@ export function Register() {
 
         <Input
           mb="5px"
-          borderWidth={0}
-          borderBottomWidth={1}
-          borderColor={'gray.600'}
+          borderColor={'#ffffff'}
+          bg={'#ffffff'}
+          placeholderTextColor={'gray.700'}
           placeholder="Confirmar a senha"
           value={confirmPassword}
           onChangeText={handleConfirmPasswordChange}
+          _focus={{bg: '#ffffff'}}
         />
 
         <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>
@@ -269,7 +276,7 @@ export function Register() {
               accessibilityLabel="Checkbox"
               aria-label="Checkbox"
             />
-            <Text>Concordo com os termos e serviços Espartanas.</Text>
+            <Text color={'#ffffff'}>Concordo com os termos e serviços Espartanas.</Text>
           </HStack>
 
           <HStack mb={'10px'}>
@@ -280,7 +287,7 @@ export function Register() {
               accessibilityLabel="Checkbox"
               aria-label="Checkbox"
             />
-            <Text>
+            <Text color={'#ffffff'}>
               Concordo com o processamento dos meus dados pessoais conforme
               descrito acima e melhor explicado na Política de Privacidade
             </Text>
@@ -295,8 +302,6 @@ export function Register() {
           text="Cadastrar"
         />
       </Main>
-
-      <Footer />
     </Screen>
   );
 }

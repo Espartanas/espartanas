@@ -9,112 +9,120 @@ import {useAuth} from '../../../../context/authContext';
 import {setToken} from '../../../../services/auth';
 
 export function SignInInput() {
-  const {user, auth, setUser, setAuth} = useAuth();
   const navigation = useNavigation();
 
-  const [login, setLogin] = useState({
-    email: '',
-    password: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const {hasEmail, setHasEmail, setToken} = useAuth();
 
-  const [loginError, setLoginError] = useState('');
+  // async function handleLoginBiometrics() {
+  //   const email: string = (await CustomAsyncStorage.getItem(
+  //     '@user_email',
+  //   )) as string;
 
-  async function handleLoginBiometrics() {
-    const email: string = (await CustomAsyncStorage.getItem(
-      '@user_email',
-    )) as string;
+  //   const password: string = (await CustomAsyncStorage.getItem(
+  //     '@user_password',
+  //   )) as string;
 
-    const password: string = (await CustomAsyncStorage.getItem(
-      '@user_password',
-    )) as string;
+  //   const isPermitedFaceID: string = JSON.parse(
+  //     (await CustomAsyncStorage.getItem('@switch_face_id')) as string,
+  //   );
 
-    const isPermitedFaceID: string = JSON.parse(
-      (await CustomAsyncStorage.getItem('@switch_face_id')) as string,
-    );
+  //   if (isPermitedFaceID) {
+  //     setLogin({
+  //       email,
+  //       password,
+  //     });
+  //   }
 
-    if (isPermitedFaceID) {
-      setLogin({
-        email,
-        password,
+  //   const configs = {
+  //     title: 'Autenticação Biométrica',
+  //     color: '#FF0000',
+  //     sensorErrorDescription: 'Touch ID inválido',
+  //   };
+
+  //   if (isPermitedFaceID && email && password) {
+  //     TouchID.authenticate('Login App Clube de Férias', configs)
+  //       .then((success: boolean) => {
+  //         console.log('Sucesso na autenticação: ' + success);
+  //         signIn({email, password});
+  //       })
+  //       .catch((error: any) => {
+  //         console.error('Erro na autenticação: ' + error);
+  //       });
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   handleLoginBiometrics();
+  // }, []);
+
+  async function validateEmail(email: string) {
+    api
+      .post('/has_email', {email})
+      .then(res => {
+        console.log('login', res.data.message);
+        setHasEmail(res.data.message);
+        if (!res.data.message) {
+          navigation.navigate('register' as never);
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data.message);
+        if (!error.response.data.message) {
+          navigation.navigate('register' as never);
+        }
       });
-    }
-
-    const configs = {
-      title: 'Autenticação Biométrica',
-      color: '#FF0000',
-      sensorErrorDescription: 'Touch ID inválido',
-    };
-
-    if (isPermitedFaceID && email && password) {
-      TouchID.authenticate('Login App Clube de Férias', configs)
-        .then((success: boolean) => {
-          console.log('Sucesso na autenticação: ' + success);
-          signIn({email, password});
-        })
-        .catch((error: any) => {
-          console.error('Erro na autenticação: ' + error);
-        });
-    }
   }
 
-  async function signIn({email, password}: {email: string; password: string}) {
-    console.log(email, password);
+  async function signIn(email: string, password: string) {
     api
-      .post('/auth/login', {email, password})
+      .post('/auth', {email, password})
       .then(res => {
         console.log('login', res.data);
-        setUser(res.data.user);
-        setToken(res.data.access_token);
-        setLoginError('');
-        setAuth(true);
+        setToken(res.data.token)
       })
       .catch(error => {
         console.log(error.response.data);
-        setLoginError(error.response.data.message[0]);
       });
   }
-
-  useEffect(() => {
-    handleLoginBiometrics();
-  }, []);
 
   return (
     <VStack>
       <Input
-        borderWidth={0}
-        borderBottomWidth={1}
-        borderColor={'gray.600'}
-        placeholder="E-mail"
-        onChangeText={text => setLogin({...login, email: text})}
-      />
-      <Text
-        mt="5px"
-        fontSize={'12px'}
-        bold
-        color={'red.500'}
-        ml="12px"
-        mb="20px">
-        {loginError}
-      </Text>
-
-      <Input
-        borderWidth={0}
-        borderBottomWidth={1}
-        type="password"
-        borderColor={'gray.600'}
-        placeholder="Senha"
-        onChangeText={text => setLogin({...login, password: text})}
+        borderColor={'#ffffff'}
+        placeholder="Digite o seu e-mail"
+        bg={'#ffffff'}
+        placeholderTextColor={'gray.700'}
+        onChangeText={text => setEmail(text)}
+        _focus={{bg: '#ffffff'}}
+        mb="20px"
       />
 
+      {
+        hasEmail &&
+        <Input
+          borderColor={'#ffffff'}
+          placeholder="Password"
+          bg={'#ffffff'}
+          placeholderTextColor={'gray.700'}
+          onChangeText={text => setPassword(text)}
+          _focus={{bg: '#ffffff'}}
+          mb="20px"
+        />
+      }
+
+      <Button
+        onPress={() => hasEmail ? signIn(email, password) : validateEmail(email)}
+        text={hasEmail ? "Logar" : "Entrar"}
+      />
       <Pressable
         onPress={() => navigation.navigate('forgetPassword' as never)}
-        mb="20px">
-        <Text color={'blue.500'} alignSelf={'flex-end'}>
+      >
+        <Text color={'#5968DF'} alignSelf={'flex-end'}>
           Esqueci minha senha
         </Text>
       </Pressable>
-
-      <Button onPress={() => signIn(login)} text="Entrar" />
     </VStack>
   );
 }
