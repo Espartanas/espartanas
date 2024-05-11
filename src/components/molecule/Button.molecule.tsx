@@ -25,7 +25,7 @@ export default function Button({
   alignItems = 'center',
   justifyContent = 'center',
   fontSize = '20px',
-  borderColorVariant = 'blue.800',
+  borderColorVariant = '#ffffff',
   testID,
   ...rest
 }: Props): JSX.Element {
@@ -38,7 +38,7 @@ export default function Button({
       }}
       width={width}
       height={height}
-      bg={variant ? colors.white : '#5968DF'}
+      bg={variant ? '#02041B' : '#5968DF'}
       borderWidth={variant ? '1px' : 0}
       borderColor={variant ? borderColorVariant : colors.white}
       borderRadius={borderRadius}

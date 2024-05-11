@@ -29,7 +29,7 @@ function App(): JSX.Element {
         <QueryClientProvider client={queryClient}>
           <NavigationContainer>
             <NativeBaseProvider theme={theme}>
-              <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+              <StatusBar backgroundColor={'#02041B'}/>
               <Routes />
             </NativeBaseProvider>
           </NavigationContainer>

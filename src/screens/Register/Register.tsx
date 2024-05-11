@@ -10,8 +10,11 @@ import {RegisterFormData, RegisterSchema} from '../../utils/resolvers';
 import Button from '../../components/molecule/Button.molecule';
 import {maskDate, maskLetters, maskPhone} from '../../utils/masks';
 import api from '../../services/api';
+import { useNavigation } from '@react-navigation/native';
 
 export function Register() {
+  const navigation = useNavigation();
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordErrors, setPasswordErrors] = useState({
@@ -89,15 +92,19 @@ export function Register() {
 
   const onSubmit = async (data: RegisterFormData) => {
     const body = {
-      ...data,
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      birthdate: data.birthDate,
       password,
-      member: false,
-      acceptTerms: !handleDisableButton(),
+      privacypolitics: !handleDisableButton(),
+      termsandservices: !handleDisableButton(),
     };
 
     api
       .post('/user', body)
-      .then(res => console.log(res.data))
+      .then(res => navigation.navigate('login' as never))
       .catch(err => console.log(err.response.data));
   };
 

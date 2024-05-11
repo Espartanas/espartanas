@@ -11,6 +11,7 @@ import { useAuth } from '../../context/authContext';
 
 export function SignUp() {
   const {hasEmail} = useAuth();
+  
   return (
     <Screen paddingX={'20px'} footer>
       <Center>

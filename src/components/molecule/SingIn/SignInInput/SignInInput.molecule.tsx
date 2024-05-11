@@ -61,21 +61,21 @@ export function SignInInput() {
     api
       .post('/has_email', {email})
       .then(res => {
-        console.log('login', res.data.message);
-        setHasEmail(res.data.message);
-        if (!res.data.message) {
+        console.log('login', res.data.email);
+        setHasEmail(res.data.email);
+        if (!res.data.email) {
           navigation.navigate('register' as never);
         }
       })
       .catch(error => {
-        console.log(error.response.data.message);
+        console.log('ariel', error.response.data.message);
         if (!error.response.data.message) {
           navigation.navigate('register' as never);
         }
       });
   }
 
-  async function signIn(email: string, password: string) {
+  function signIn(email: string, password: string) {
     api
       .post('/auth', {email, password})
       .then(res => {
