@@ -13,7 +13,7 @@ export function SignInInput() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {hasEmail, setHasEmail, setToken} = useAuth();
+  const {hasEmail, setHasEmail, setToken, setAuth, setUser} = useAuth();
 
   // async function handleLoginBiometrics() {
   //   const email: string = (await CustomAsyncStorage.getItem(
@@ -61,17 +61,14 @@ export function SignInInput() {
     api
       .post('/has_email', {email})
       .then(res => {
-        console.log('login', res.data.email);
+        console.log('test_email', res.data.email);
         setHasEmail(res.data.email);
         if (!res.data.email) {
           navigation.navigate('register' as never);
         }
       })
       .catch(error => {
-        console.log('ariel', error.response.data.message);
-        if (!error.response.data.message) {
-          navigation.navigate('register' as never);
-        }
+        console.log(error.response.data);
       });
   }
 
@@ -81,9 +78,15 @@ export function SignInInput() {
       .then(res => {
         console.log('login', res.data);
         setToken(res.data.token)
+        setUser(res.data.usuario)
+        setAuth(true)
       })
       .catch(error => {
         console.log(error.response.data);
+      })
+      .finally(() => {
+        setEmail('');
+        setHasEmail(false);
       });
   }
 
@@ -108,6 +111,7 @@ export function SignInInput() {
           placeholderTextColor={'gray.700'}
           onChangeText={text => setPassword(text)}
           _focus={{bg: '#ffffff'}}
+          type='password'
           mb="20px"
         />
       }

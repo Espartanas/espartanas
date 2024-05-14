@@ -10,11 +10,8 @@ import PlanPayment from '../../screens/PlanPayment/PlanPayment';
 
 export type RootStackParamList = {
   Home: undefined;
-  Menu: undefined;
-  Plans: undefined;
-  Profile: undefined;
-  Dashboard: undefined;
-  PlanPayment: undefined;
+  Planos: undefined;
+  Perfil: undefined;
 };
 
 const {Navigator, Screen} = createNativeStackNavigator<RootStackParamList>();
@@ -23,30 +20,19 @@ export const AppRoutes = () => {
   return (
     <Navigator>
       <Screen
-        options={{headerTitle: 'Bem Vindo'}}
+        options={{headerShown: false}}
         name="Home"
         component={Home}
       />
-      <Screen name="Menu" component={Menu} />
       <Screen
         options={{headerTitle: 'Planos'}}
-        name="Plans"
+        name="Planos"
         component={Plans}
       />
       <Screen
-        options={{headerTitle: 'Perfil'}}
-        name="Profile"
-        component={Profile}
-      />
-      <Screen
         options={{headerShown: false}}
-        name="Dashboard"
-        component={Dashboard}
-      />
-      <Screen
-        options={{headerTitle: 'Pagamento'}}
-        name="PlanPayment"
-        component={PlanPayment}
+        name="Perfil"
+        component={Profile}
       />
     </Navigator>
   );
