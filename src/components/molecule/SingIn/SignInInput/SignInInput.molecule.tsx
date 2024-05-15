@@ -78,7 +78,7 @@ export function SignInInput() {
       .then(res => {
         console.log('login', res.data);
         setToken(res.data.token)
-        setUser(res.data.usuario)
+        setUser(res.data.user)
         setAuth(true)
       })
       .catch(error => {

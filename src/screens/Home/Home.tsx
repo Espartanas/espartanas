@@ -31,14 +31,15 @@ export function Home() {
       <HStack mt={'30px'}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {
-            menuIcons.map((element, index) => (
+            menuIcons?.map((element, index) => (
               <Pressable
+                key={index}
                 _pressed={{opacity: 0.5}}
                 onPress={() => navigation.navigate(element.name as never)}
                 rounded={'5px'}
                 p={'10px'}
                 w={'150px'}
-                bg={element.name === 'Series' ? user.premium === 'gratuito' ? 'red.300' : '#5968DF' : '#5968DF'} mr={'10px'}
+                bg={element.name === 'Series' ? user?.premium === 'gratuito' ? 'red.300' : '#5968DF' : '#5968DF'} mr={'10px'}
               >
                 <HStack alignItems={'center'} space={2}>
                   <Image tintColor={'#ffffff'} w={8} h={8} source={element.icon} alt={'logo'} />
