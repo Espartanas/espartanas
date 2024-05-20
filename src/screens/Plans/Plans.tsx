@@ -1,82 +1,80 @@
-import React from 'react';
-import {AddIcon, Box, Center, Pressable, Text, VStack} from 'native-base';
+import React, { useState } from 'react';
+import {Box, Center, Text} from 'native-base';
 import Screen from '../../components/molecule/Screen.molecule';
 import {plans} from '../../utils/plans';
 import {useNavigation} from '@react-navigation/native';
 import {useApp} from '../../context/appContext';
 import {useQuery} from 'react-query';
 import api from '../../services/api';
+import { Header } from '../../components/molecule/Header.molecule';
+import Carousel from 'react-native-snap-carousel';
+import PlanCard from '../../components/molecule/Plans/PlanCard';
 
 export default function Plans() {
   const navigation = useNavigation();
   const {userData, setUserData} = useApp();
 
-  const {data, isLoading} = useQuery(['allPlans'], async () => {
-    const res = await api.get('/plan');
-    return res.data;
-  });
-
-  function goToPlanPayment(item: any) {
-    setUserData({...userData, plan: item.id});
-    navigation.navigate('PlanPayment' as never);
-  }
-
-  if (isLoading) return <Text>Loading!</Text>;
+  const [isAutoPlay, setIsAutoPlay] = useState(false);
 
   return (
-    <Screen flex={1} bg={'white'}>
-      <Center mt={'30px'}>
-        <Text fontSize={'18px'} bold>
-          Selecione um dos nossos planos
-        </Text>
-      </Center>
-      <VStack py={'30px'} alignItems={'center'} w={'100%'}>
-        {data.map((item: any, index: number) => (
-          <Pressable
-            mb={'20px'}
-            alignItems={'center'}
-            borderWidth={'1px'}
-            borderColor={'blue.800'}
-            justifyContent={'center'}
-            p={'10px'}
-            h={'180px'}
-            w={'85%'}
-            borderRadius={'20px'}
-            key={index}
-            onPress={() => goToPlanPayment(item)}
-            _pressed={{opacity: 0.5}}>
-            <Text bold fontSize={'20px'}>
-              {item.name}
-            </Text>
-            <Text fontSize={'18px'}>R$ {item.price},00</Text>
-            {item?.discount !== 0 && (
-              <Text bold fontSize={'18px'}>
-                {item?.discount}% de desconto
-              </Text>
-            )}
-            <Text mt={'10px'} textAlign={'center'} fontSize={'12px'}>
-              {item.description}
-            </Text>
-          </Pressable>
-        ))}
-      </VStack>
+    <Screen paddingX={'20px'} flex={1}>
+      <Header title='Planos' />
 
-      <Pressable
-        mx={'20px'}
-        mb={'40px'}
-        alignItems={'center'}
-        justifyContent={'center'}
-        h={'60px'}
-        bg={'white'}
-        borderRadius={'10px'}
-        borderWidth={'1px'}
-        borderColor={'blue.800'}
-        _pressed={{opacity: 0.5}}
-        onPress={() => navigation.navigate('Dashboard' as never)}>
-        <Text fontSize={'20px'} color={'blue.800'} bold>
-          Assinar depois
+      <Box>
+        <Text
+          textAlign={'center'}
+          color={'#ffffff'}
+          fontSize={'24px'}
+          mt={'30px'}
+        >
+          Selecione um dos nossos planos abaixo e aproveite!
         </Text>
-      </Pressable>
+
+      </Box>
+
+      <Box mt={'30px'}>
+        <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
+          • 3 níveis de séries (iniciante, intermediário e avançado);
+        </Text>
+
+        <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
+          • Explicações extremamente detalhadas e com vídeo;
+        </Text>
+
+        <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
+          • Mudança de treino a cada 2 meses;
+        </Text>
+
+        {/* <Text color={'#ffffff'} fontSize={'14px'}>
+          • Telegram do Espartanas para acompanhamento da equipe;
+        </Text> */}
+      </Box>
+
+      {/* <PlanCard /> */}
+
+      <Center>
+        <Carousel
+          ref={(c) => {carousel = c; }}
+          data={plans}
+          renderItem={({item}) => {
+            return (
+              <PlanCard
+                name={item.name}
+                big_price={item.big_price}
+                little_price={item.little_price}
+                text_discount={item.text_discount}
+                text_installments={item.text_installments}
+                description={item.description}
+              />
+            )
+          }}
+          slideStyle={{paddingVertical: 40}}
+          sliderWidth={380}
+          itemWidth={280}
+          sliderHeight={1000}
+          centerContent
+        />
+      </Center>
     </Screen>
   );
 }

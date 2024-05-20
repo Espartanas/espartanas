@@ -19,14 +19,11 @@ export const RegisterSchema = yup.object({
 export type RegisterFormData = yup.InferType<typeof RegisterSchema>;
 
 export const ProfileSchema = yup.object({
-  firstName: yup
-    .string()
-    .min(3, 'Digite um nome válido.'),
+  firstName: yup.string().min(3, 'Digite um nome válido.'),
   lastName: yup.string(),
   phone: yup.string(),
-  email: yup
-    .string()
-    .email('O e-mail deve possuir um formato válido.'),
+  email: yup.string().email('O e-mail deve possuir um formato válido.'),
+  birthDate: yup.string()
 });
 
 export type ProfileFormData = yup.InferType<typeof ProfileSchema>;

@@ -2,16 +2,15 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Home} from '../../screens/Home/Home';
-import {Menu} from '../../screens/Menu/Menu';
 import Plans from '../../screens/Plans/Plans';
 import Profile from '../../screens/Profile/Profile';
-import Dashboard from '../../screens/Dashboard/Dashboard';
-import PlanPayment from '../../screens/PlanPayment/PlanPayment';
+import About from '../../screens/About/About';
 
 export type RootStackParamList = {
   Home: undefined;
   Planos: undefined;
   Perfil: undefined;
+  Espartanas: undefined;
 };
 
 const {Navigator, Screen} = createNativeStackNavigator<RootStackParamList>();
@@ -25,7 +24,7 @@ export const AppRoutes = () => {
         component={Home}
       />
       <Screen
-        options={{headerTitle: 'Planos'}}
+        options={{headerShown: false}}
         name="Planos"
         component={Plans}
       />
@@ -33,6 +32,11 @@ export const AppRoutes = () => {
         options={{headerShown: false}}
         name="Perfil"
         component={Profile}
+      />
+      <Screen
+        options={{headerShown: false}}
+        name="Espartanas"
+        component={About}
       />
     </Navigator>
   );

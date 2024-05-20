@@ -1,28 +1,29 @@
 export const plans = [
   {
     id: 1,
-    name: 'Mensal',
-    price: 20,
-    string_price: '20,00/mês',
-    description:
-      'Plano interessante pra quem quer degustar o app, analisar os nossos treinos, ter o nosso acompanhamento e tirar as próprias conclusões do nosso produto.',
+    name: 'Anual',
+    big_price: 9,
+    little_price: ',90/mês',
+    text_discount: 'Economize R$ 180,00 no final do ano com nosso plano mais em conta',
+    text_installments: 'Parcele em até 12x de R$ 9,90 sem juros 1x de R$ 118,80',
+    description: '*renovação autimatica a cada 12 meses',
   },
   {
     id: 2,
     name: 'Semestral',
-    price: 12,
-    string_price: '12,00/mês',
-    mounth_discount: '40% de desconto',
-    description:
-      'Ideal para quem ja malha a um tempo e está procurando desafios mais intensos, séries mais desafiadoras e contância de treinos de qualidade.',
+    big_price: 14,
+    little_price: ',90/mês',
+    text_discount: 'Economize R$ 64,50 no final do ano com nosso plano mais em conta',
+    text_installments: 'Parcele em até 6x de R$ 14,90 sem júros 1x de R$ 89,40',
+    description: '*renovação autimatica a cada 6 mês' 
   },
   {
     id: 3,
-    name: 'Anual',
-    price: 7,
-    string_price: '7,00/mês',
-    mounth_discount: '65% de desconto',
-    description:
-      'Ideal pra quem já é bem mais experiente no treino, 1 ano de séries muito desafiadoras, troca de exercicios mensais e acompanhamento com nossos profissionais de educação física.',
+    name: 'Mensal',
+    big_price: 24,
+    little_price: ',90/mês',
+    text_discount: 'Teste todo seu potêncial durante um mês com o nosso plano mensal.',
+    text_installments: 'Compre em 1 x de 24,90',
+    description: '*renovação autimatica a cada mês',
   },
 ];

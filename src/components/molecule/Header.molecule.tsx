@@ -6,31 +6,19 @@ import {useNavigation} from '@react-navigation/native';
 
 type Props = IHStackProps & {
   title: string;
-  showArrowBack?: boolean;
-  showTitle?: boolean;
 };
 
-export function Header({title, showArrowBack, showTitle, ...rest}: Props) {
+export function Header({title, ...rest}: Props) {
   const navigation = useNavigation();
   return (
-    <HStack
-      py={5}
-      alignItems={'center'}
-      justifyContent={showArrowBack ? 'space-between' : 'center'}
-      {...rest}>
-      {showArrowBack ? (
-        <Pressable onPress={() => navigation.goBack()}>
-          <ArrowBack color={'white'} />
-        </Pressable>
-      ) : (
-        <Text></Text>
-      )}
+    <HStack alignItems={'center'} justifyContent={'space-between'} mt={'20px'}>
+      <Pressable justifyContent={'center'} w={12} h={12} onPress={() => navigation.goBack()} _pressed={{opacity: 0.5}}>
+        <ArrowBack color='#ffffff' />
+      </Pressable>
 
-      {showTitle && (
-        <Text color={'white'} bold fontSize={20}>
-          {title}
-        </Text>
-      )}
+      <Text bold fontSize={'28px'} color={'#ffffff'}>
+        {title}
+      </Text>
     </HStack>
   );
 }

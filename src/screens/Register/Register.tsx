@@ -123,7 +123,7 @@ export function Register() {
 
   return (
     <Screen paddingX={'20px'} footer>
-      <Header showArrowBack showTitle title="Cadastro" />
+      <Header title="Cadastro" />
 
       <Main>
         <Controller
