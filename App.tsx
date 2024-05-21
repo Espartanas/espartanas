@@ -7,6 +7,7 @@ import {theme} from './src/theme/theme';
 import Routes from './src/routes';
 import {AuthProvider} from './src/context/authContext';
 import {AppProvider} from './src/context/appContext';
+import ValidateAccount from './src/screens/ValidateAccount/ValidateAccount';
 
 if (__DEV__) {
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
@@ -30,7 +31,8 @@ function App(): JSX.Element {
           <NavigationContainer>
             <NativeBaseProvider theme={theme}>
               <StatusBar backgroundColor={'#02041B'}/>
-              <Routes />
+              {/* <Routes /> */}
+              <ValidateAccount />
             </NativeBaseProvider>
           </NavigationContainer>
         </QueryClientProvider>

@@ -104,7 +104,7 @@ export function Register() {
 
     api
       .post('/user', body)
-      .then(res => navigation.navigate('login' as never))
+      .then(res => navigation.navigate('validateAccount' as never))
       .catch(err => console.log(err.response.data));
   };
 
