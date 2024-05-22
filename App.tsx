@@ -31,8 +31,7 @@ function App(): JSX.Element {
           <NavigationContainer>
             <NativeBaseProvider theme={theme}>
               <StatusBar backgroundColor={'#02041B'}/>
-              {/* <Routes /> */}
-              <ValidateAccount />
+              <Routes />
             </NativeBaseProvider>
           </NavigationContainer>
         </QueryClientProvider>

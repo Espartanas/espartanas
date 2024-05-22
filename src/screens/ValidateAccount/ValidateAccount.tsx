@@ -1,10 +1,16 @@
-import { Center, HStack, Image, Input, NumberInput, Text, VStack } from "native-base";
+import { Center, HStack, Image, Input, NumberInput, Pressable, Text, VStack } from "native-base";
 import Screen from "../../components/molecule/Screen.molecule";
 import Button from "../../components/molecule/Button.molecule";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { maskOnlyNumbers } from "../../utils/masks";
+import api from "../../services/api";
+import { useAuth } from "../../context/authContext";
 
-export default function ValidateAccount() {
+type Props = {
+  route: any
+}
+
+export default function ValidateAccount({route}: Props) {
   const [code, setCode] = useState({
     code1: '',
     code2: '',
@@ -12,9 +18,29 @@ export default function ValidateAccount() {
     code4: '',
   })
 
+  const {setToken, setUser, setAuth} = useAuth()
+
+  function logIn() {
+    api
+      .post('/auth', {email: route.params.email, password: route.params.password})
+      .then((res) => {
+        setToken(res.data.token)
+        setUser(res.data.user)
+        setAuth(true)
+      })
+      .catch((err) => console.log(err.response.data))
+
+  }
+
   function handleSubmit() {
     const fullCode = `${code.code1}${code.code2}${code.code3}${code.code4}`
-    console.log(fullCode)
+    api
+      .put('/validate_account', {email: route.params.email, code: fullCode})
+      .then((res) => {
+        console.log('foi');
+        logIn()
+      })
+      .catch((err) => console.log(err.response.data))
   }
 
   return (
@@ -104,6 +130,11 @@ export default function ValidateAccount() {
            }}
         />
       </HStack>
+
+      <Pressable _pressed={{opacity: 0.5}} onPress={() => console.log('clicked')} alignItems={'center'} justifyContent={'center'} mb={'30px'} flexDirection={'row'}>
+        <Text color={'#ffffff'}>Não recebeu o código?</Text>
+        <Text ml={'5px'} color={'#5968DF'} textDecorationLine={'underline'}>Clique aqui!</Text>
+      </Pressable>
 
       <Button onPress={handleSubmit} text="Confirmar" />
     </Screen>

@@ -104,7 +104,7 @@ export function Register() {
 
     api
       .post('/user', body)
-      .then(res => navigation.navigate('validateAccount' as never))
+      .then(res => navigation.navigate({name: 'validateAccount', params: {email: body.email, password: body.password}} as never))
       .catch(err => console.log(err.response.data));
   };
 
