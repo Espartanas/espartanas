@@ -6,7 +6,7 @@ import {CustomAsyncStorage} from '../../../../utils/CustomAsyncStorage';
 import TouchID from 'react-native-touch-id';
 import api from '../../../../services/api';
 import {useAuth} from '../../../../context/authContext';
-import {setToken} from '../../../../services/auth';
+import {setToken as asyncToken} from '../../../../services/auth';
 
 export function SignInInput() {
   const navigation = useNavigation();
@@ -57,6 +57,12 @@ export function SignInInput() {
   //   handleLoginBiometrics();
   // }, []);
 
+  async function saveEmailPasswordToken(email: string, password: string, token: string) {
+    await CustomAsyncStorage.setItem('@user_email', email);
+    await CustomAsyncStorage.setItem('@user_password', password);
+    await asyncToken(token);
+  }
+
   async function validateEmail(email: string) {
     api
       .post('/has_email', {email})
@@ -76,6 +82,7 @@ export function SignInInput() {
     api
       .post('/auth', {email, password})
       .then(res => {
+        saveEmailPasswordToken(email, password, res.data.token);
         console.log('login', res.data);
         setToken(res.data.token)
         setUser(res.data.user)

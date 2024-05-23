@@ -5,7 +5,6 @@ import {
   ScrollView,
   VStack,
 } from 'native-base';
-import {Platform} from 'react-native';
 import { Footer } from '../atom/Footer.atom';
 
 type Props = IScrollViewProps & {

@@ -5,11 +5,24 @@ import {HStack, Image, Pressable, ScrollView, Text, VStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import { menuIcons } from '../../utils/menuIcons';
 import Button from '../../components/molecule/Button.molecule';
+import { CustomAsyncStorage } from '../../utils/CustomAsyncStorage';
 
 export function Home() {
   const {user} = useAuth();
 
   const navigation = useNavigation();
+
+  async function storage() {
+    const email = await CustomAsyncStorage.getItem('@user_email');
+    const password = await CustomAsyncStorage.getItem('@user_password');
+    const token = await CustomAsyncStorage.getItem('@user_token');
+
+    // await CustomAsyncStorage.removeItem('@user_email');
+    // await CustomAsyncStorage.removeItem('@user_password');
+    // await CustomAsyncStorage.removeItem('@user_token');
+
+    console.log(email, password, token)
+  }
 
   return (
     <Screen flex={1} paddingX={'20px'}>
@@ -72,7 +85,7 @@ export function Home() {
         Nós entendemos que cada indivíduo é único, com diferentes metas, habilidades. Por isso que projetamos o Espartanas para ser flexível e adaptável. Aqui está um vislumbre do que você pode esperar:
       </Text>
 
-      <Button my={'30px'} bg={'#25D366'} text='Whatsapp' />
+      <Button onPress={storage} my={'30px'} bg={'#25D366'} text='Whatsapp' />
     </Screen>
   );
 }

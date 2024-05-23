@@ -1,6 +1,6 @@
 import {CustomAsyncStorage} from '../../utils/CustomAsyncStorage';
 
-export const setToken = async value => {
+export const setToken = async (value: any) => {
   try {
     await CustomAsyncStorage.setItem('TokenEspartana', value);
   } catch (error) {}
