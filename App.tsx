@@ -22,13 +22,19 @@ const queryClient = new QueryClient({
   },
 });
 
+const config = {
+  dependencies: {
+    'linear-gradient': require('react-native-linear-gradient').default,
+  },
+};
+
 function App(): JSX.Element {
   return (
     <AuthProvider>
       <AppProvider>
         <QueryClientProvider client={queryClient}>
           <NavigationContainer>
-            <NativeBaseProvider theme={theme}>
+            <NativeBaseProvider config={config} theme={theme}>
               <StatusBar backgroundColor={'#02041B'}/>
               <Routes />
             </NativeBaseProvider>

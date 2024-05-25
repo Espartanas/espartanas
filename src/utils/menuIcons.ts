@@ -3,6 +3,7 @@ import perfilIcon from '../assets/images/perfil_icon.png';
 import planosIcon from '../assets/images/planos_icon.png';
 import espartanasIcon from '../assets/images/espartanas_icon.png';
 import faleConoscoIcon from '../assets/images/fale_conosco_icon.png';
+import questions from '../assets/images/questions.png';
 
 export const menuIcons = [
   {
@@ -27,7 +28,12 @@ export const menuIcons = [
   },
   {
     icon: faleConoscoIcon,
-    name: 'Fale Conosco',
+    name: 'FaleConosco',
     text: 'Deixe aqui sua dúvida ou critica a respeito do app'
-  }
+  },
+  {
+    icon: questions,
+    name: 'Perguntas',
+    text: 'Acesse aqui as perguntas mais frequentes.'
+  },
 ]

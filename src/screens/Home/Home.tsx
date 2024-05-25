@@ -6,6 +6,10 @@ import {useNavigation} from '@react-navigation/native';
 import { menuIcons } from '../../utils/menuIcons';
 import Button from '../../components/molecule/Button.molecule';
 import { CustomAsyncStorage } from '../../utils/CustomAsyncStorage';
+import ServicesCard from '../../components/molecule/Home/ServicesCard/ServicesCard';
+import { homeSerivces } from '../../utils/homeServices';
+import FrequentQuestions from '../../components/molecule/Home/FrequentQuestions/FrequentQuestions';
+import { frequentQuestions } from '../../utils/FrequentQuestions';
 
 export function Home() {
   const {user} = useAuth();
@@ -41,7 +45,9 @@ export function Home() {
         <Image w={32} borderRadius={10} h={32} source={require('../../assets/images/home_image_1.png')} alt={'logo'} />
       </HStack>
 
-      <HStack mt={'30px'}>
+      <VStack mt={'30px'}>
+        <Text fontSize={'24px'} bold color={'#ffffff'} mb={'10px'}>Menu</Text>
+
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {
             menuIcons?.map((element, index) => (
@@ -68,7 +74,7 @@ export function Home() {
             ))
           }
         </ScrollView>
-      </HStack>
+      </VStack>
       
       <HStack alignItems={'center'} mt={'30px'} justifyContent={'space-between'} w={'100%'}>
         <Image w={32} borderRadius={10} h={32} source={require('../../assets/images/home_image_2.png')} alt={'logo'} />
@@ -85,6 +91,37 @@ export function Home() {
         Nós entendemos que cada indivíduo é único, com diferentes metas, habilidades. Por isso que projetamos o Espartanas para ser flexível e adaptável. Aqui está um vislumbre do que você pode esperar:
       </Text>
 
+      <Text mt={'30px'} fontSize={'24px'} bold color={'#ffffff'} mb={'10px'} w={'200px'}>Divisão de treinos e nivelamento</Text>
+
+      {
+        homeSerivces?.map((element, index) => (
+          <ServicesCard
+            key={index}
+            image={element.image}
+            textImage={element.textImage}
+            textSign={element.textSign}
+            buttonText={user.premium === 'gratuito' ? element.buttonText : 'Acessar'}
+            variant={element.variant}
+            premium={user.premium}
+            screen={element.screen}
+          />
+        ))
+      }
+
+      <Text fontSize={'24px'} bold color={'#ffffff'} mb={'10px'}>Perguntas frequentes</Text>
+
+      {
+        frequentQuestions.slice(0, 4).map((element, index) => (
+          <FrequentQuestions
+            key={index}
+            question={element.questions}
+            answer={element.answer}
+          />
+        ))
+      }
+
+      <Button onPress={() => navigation.navigate('Perguntas' as never)} bg={'#5968DF'} text='Mais perguntas' />
+      
       <Button onPress={storage} my={'30px'} bg={'#25D366'} text='Whatsapp' />
     </Screen>
   );

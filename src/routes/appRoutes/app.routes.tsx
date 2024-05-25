@@ -5,12 +5,16 @@ import {Home} from '../../screens/Home/Home';
 import Plans from '../../screens/Plans/Plans';
 import Profile from '../../screens/Profile/Profile';
 import About from '../../screens/About/About';
+import Questions from '../../screens/Questions/Questions';
+import TalkToUs from '../../screens/TalkToUs/TalkToUs';
 
 export type RootStackParamList = {
   Home: undefined;
   Planos: undefined;
   Perfil: undefined;
   Espartanas: undefined;
+  Perguntas: undefined;
+  FaleConosco: undefined;
 };
 
 const {Navigator, Screen} = createNativeStackNavigator<RootStackParamList>();
@@ -37,6 +41,16 @@ export const AppRoutes = () => {
         options={{headerShown: false}}
         name="Espartanas"
         component={About}
+      />
+      <Screen
+        options={{headerShown: false}}
+        name="Perguntas"
+        component={Questions}
+      />
+      <Screen
+        options={{headerShown: false}}
+        name="FaleConosco"
+        component={TalkToUs}
       />
     </Navigator>
   );
