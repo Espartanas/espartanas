@@ -44,15 +44,27 @@ export default function Plans() {
         <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
           • Mudança de treino a cada 2 meses;
         </Text>
-
-        {/* <Text color={'#ffffff'} fontSize={'14px'}>
-          • Telegram do Espartanas para acompanhamento da equipe;
-        </Text> */}
       </Box>
 
-      {/* <PlanCard /> */}
-
-      <Center>
+      <Center my={'50px'}>
+        {
+          plans.map((element, index) => (
+            <PlanCard
+              key={index}
+              name={element.name}
+              big_price={element.big_price}
+              little_price={element.little_price}
+              text_discount={element.text_discount}
+              text_installments={element.text_installments}
+              description={element.description}
+              big_square_color={element.big_square_color}
+              little_square_color={element.little_square_color}
+            />
+          ))
+        }
+      </Center>
+      
+      {/* <Center>
         <Carousel
           ref={(c) => {carousel = c; }}
           data={plans}
@@ -74,7 +86,7 @@ export default function Plans() {
           sliderHeight={1000}
           centerContent
         />
-      </Center>
+      </Center> */}
     </Screen>
   );
 }
