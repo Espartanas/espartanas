@@ -4,7 +4,6 @@ import Screen from '../../components/molecule/Screen.molecule';
 import {plans} from '../../utils/plans';
 import {useNavigation} from '@react-navigation/native';
 import {useApp} from '../../context/appContext';
-import {useQuery} from 'react-query';
 import api from '../../services/api';
 import { Header } from '../../components/molecule/Header.molecule';
 import Carousel from 'react-native-snap-carousel';
