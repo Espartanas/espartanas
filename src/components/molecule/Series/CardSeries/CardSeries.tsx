@@ -2,15 +2,17 @@ import { Box, Image, Pressable, Text, VStack } from "native-base";
 import { ArrowRight } from "../../../../assets/icons/arrow-right";
 
 type Props = {
+  id: number;
   codigo: string;
   descricao: string;
   image: any;
+  selectedLevel: string;
 }
 
-export default function CardSeries({codigo, descricao, image}: Props) {
+export default function CardSeries({id, codigo, descricao, image, selectedLevel}: Props) {
   return (
     <Pressable
-      onPress={() => { console.log(`Treino ${codigo} Selecionado`) }}
+      onPress={() => { selectedLevel.length === 0 ? console.log(`Selecione um nível de treino`) : console.log(`Treino ${id} selecionado, nível ${selectedLevel}`) }}
       _pressed={{ opacity: 0.5 }}
       bg={'#000000'}
       borderWidth={1}
@@ -40,6 +42,22 @@ export default function CardSeries({codigo, descricao, image}: Props) {
       <Box bottom={3} right={3} position={'absolute'}>
         <ArrowRight />
       </Box>
+
+      <Box
+        top={'15px'}
+        left={'55px'}
+        position={'absolute'}
+        h={'2px'}
+        w={'83%'}
+        opacity={0.5}
+        bg={{
+          linearGradient: {
+            colors: ['#5D6CED', '#B9BDE1', '#000000'],
+            start: [1, 0],
+            end: [0, 0],
+          }
+        }}
+      />
     </Pressable>
   )
 }
