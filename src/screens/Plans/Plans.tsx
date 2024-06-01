@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
 import {Box, Center, Text} from 'native-base';
 import Screen from '../../components/molecule/Screen.molecule';
-import {plans} from '../../utils/plans';
-import {useNavigation} from '@react-navigation/native';
-import {useApp} from '../../context/appContext';
+// import {plans} from '../../utils/plans';
+// import {useNavigation} from '@react-navigation/native';
+// import {useApp} from '../../context/appContext';
 import api from '../../services/api';
 import { Header } from '../../components/molecule/Header.molecule';
-import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-snap-carousel';
 import PlanCard from '../../components/molecule/Plans/PlanCard';
+import { useQuery } from 'react-query';
+import { ActivityIndicator } from 'react-native';
+import { Atraining } from '../../assets/icons/A-training';
 
 export default function Plans() {
-  const navigation = useNavigation();
-  const {userData, setUserData} = useApp();
+  // const navigation = useNavigation();
+  // const {userData, setUserData} = useApp();
 
-  const [isAutoPlay, setIsAutoPlay] = useState(false);
+  // const [isAutoPlay, setIsAutoPlay] = useState(false);
+
+  const {data, isLoading} = useQuery(['planos'], async () => {
+    const res = await api.get('/plans');
+    return res.data.planos;
+  });
+
+  console.log('data', data)
+
+  if (isLoading) {
+    return (
+      <Screen>
+        <ActivityIndicator style={{marginTop: '50%'}} size="large" color="#ffffff" />
+      </Screen>
+    );
+  }
 
   return (
     <Screen paddingX={'20px'} flex={1}>
@@ -47,7 +65,7 @@ export default function Plans() {
 
       <Center my={'50px'}>
         {
-          plans.map((element, index) => (
+          data.map((element: any, index: number) => (
             <PlanCard
               key={index}
               name={element.name}
