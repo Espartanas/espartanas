@@ -58,7 +58,7 @@ export default function ServicesCard({ textImage, textSign, buttonText, image, v
 
         <Button
           onPress={() => {
-            premium !== 'gratuito' ? navigation.navigate('Planos' as never) : navigation.navigate(screen as never)
+            premium === 'gratuito' ? navigation.navigate('Planos' as never) : navigation.navigate(screen as never)
           }}
           w={'90%'}
           fontSize={'16px'}

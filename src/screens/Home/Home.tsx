@@ -54,7 +54,7 @@ export function Home() {
               <Pressable
                 key={index}
                 _pressed={{opacity: 0.5}}
-                onPress={() => navigation.navigate(element.name as never)}
+                onPress={() => element.name === 'Series' && user?.premium === 'gratuito' ? navigation.navigate('Planos' as never) : navigation.navigate(element.name as never)}
                 rounded={'5px'}
                 p={'10px'}
                 w={'150px'}
