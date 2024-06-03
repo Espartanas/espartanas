@@ -6,6 +6,8 @@ import { BS1training } from "../assets/icons/BS1-training"
 import { BS2training } from "../assets/icons/BS2-training"
 import { BS3training } from "../assets/icons/BS3-training"
 
+type WeekDaysKeys = 'seg' | 'ter' | 'qua' | 'qui' | 'sex' | 'sab' | 'dom';
+
 export const trainingDivision = [
   {
     id: 1,
@@ -51,19 +53,21 @@ export const trainingDivision = [
   },
 ]
 
+export const days = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'] as WeekDaysKeys[]
+
 export const trainingWeeks = [
   {
     id: 1,
     training_days: 3,
-    week_days: {
-      "seg": [{icon: Dtraining}, {icon: Atraining}],
-      "ter": ['Sem treino'],
-      "qua": [{icon: BS3training}],
-      "qui": ['Sem treino'],
-      "sex": [{icon: Dtraining}, {icon: Ctraining}],
-      "sab": ['Sem treino'],
-      "dom": ['Sem treino'],
-    },
+    week_days: [
+      [{icon: Dtraining}, {icon: Atraining}],
+      ['Sem treino'],
+      [{icon: BS3training}],
+      ['Sem treino'],
+      [{icon: Dtraining}, {icon: Ctraining}],
+      ['Sem treino'],
+      ['Sem treino'],
+    ],
     observations: {
       first: '• nos dias de membros inferiores, você tem a opção de fazer o treino D (recomendo), mas se não quiser e quiser dividir os membros, pode fazer A na segunda e C na sexta!',
       second: '• caso seu foco seja 100% quadríceps, pode fazer o A na segunda e sexta!',
@@ -72,64 +76,64 @@ export const trainingWeeks = [
       fifth: '• Está com pouco tempo? Use as fichas reduzidas'
     }
   },
-  // {
-  //   id: 2,
-  //   training_days: '4',
-  //   week_days: {
-  //     seg: 'A',
-  //     ter: 'BS3',
-  //     qua: 'C',
-  //     qui: 'Sem treino',
-  //     sex: 'D',
-  //     sab: 'Sem treino',
-  //     dom: 'Sem treino',
-  //   },
-  //   observations: {
-  //     first: '• se seu foco for mais quadríceps, faça o A na segunda e sexta e o D na quarta',
-  //     second: '• se seu foco for mais glúteo, faça o C na segunda e sexta e o D na quarta',
-  //     third: '• Se seu foco for mais membros superiores do que inferiores, na sexta você pode repetir o B3 ao invés de fazer a ficha D',
-  //     forth: '• Está com pouco tempo? Use as fichas reduzidas',
-  //     fifth: ''
-  //   }
-  // },
-  // {
-  //   id: 3,
-  //   training_days: '5',
-  //   week_days: {
-  //     seg: 'A',
-  //     ter: 'BS1',
-  //     qua: 'C',
-  //     qui: 'BS2',
-  //     sex: 'D',
-  //     sab: 'Sem treino',
-  //     dom: 'Sem treino',
-  //   },
-  //   observations: {
-  //     first: '• se seu foco for mais quadríceps, faça o A na segunda e sexta e o D na quarta',
-  //     second: '• se seu foco for mais glúteo, faça o C na segunda e sexta e o D na quarta',
-  //     third: '• Está com pouco tempo? Use as fichas reduzidas',
-  //     forth: '',
-  //     fifth: ''
-  //   }
-  // },
-  // {
-  //   id: 4,
-  //   training_days: '6',
-  //   week_days: {
-  //     seg: 'A',
-  //     ter: 'BS1',
-  //     qua: 'C',
-  //     qui: 'BS2',
-  //     sex: 'D',
-  //     sab: 'BS3',
-  //     dom: 'Sem treino',
-  //   },
-  //   observations: {
-  //     first: '• se seu foco for mais quadríceps, faça o A na segunda e sexta e o D na quarta',
-  //     second: '• se seu foco for mais glúteo, faça o C na segunda e sexta e o D na quarta',
-  //     third: '• Está com pouco tempo? Use as fichas reduzidas',
-  //     forth: '',
-  //     fifth: ''
-  //   }
-  // }
+  {
+    id: 2,
+    training_days: '4',
+    week_days: [
+      [{icon: Atraining}],
+      [{icon: BS3training}],
+      [{icon: Ctraining}],
+      ['Sem treino'],
+      [{icon: Dtraining}],
+      ['Sem treino'],
+      ['Sem treino'],
+    ],
+    observations: {
+      first: '• se seu foco for mais quadríceps, faça o A na segunda e sexta e o D na quarta',
+      second: '• se seu foco for mais glúteo, faça o C na segunda e sexta e o D na quarta',
+      third: '• Se seu foco for mais membros superiores do que inferiores, na sexta você pode repetir o B3 ao invés de fazer a ficha D',
+      forth: '• Está com pouco tempo? Use as fichas reduzidas',
+      fifth: ''
+    }
+  },
+  {
+    id: 3,
+    training_days: '5',
+    week_days: [
+      [{icon: Atraining}],
+      [{icon: BS1training}],
+      [{icon: Ctraining}],
+      [{icon: BS2training}],
+      [{icon: Dtraining}],
+      ['Sem treino'],
+      ['Sem treino'],
+    ],
+    observations: {
+      first: '• se seu foco for mais quadríceps, faça o A na segunda e sexta e o D na quarta',
+      second: '• se seu foco for mais glúteo, faça o C na segunda e sexta e o D na quarta',
+      third: '• Está com pouco tempo? Use as fichas reduzidas',
+      forth: '',
+      fifth: ''
+    }
+  },
+  {
+    id: 4,
+    training_days: '6',
+    week_days: [
+      [{icon: Atraining}],
+      [{icon: BS1training}],
+      [{icon: Ctraining}],
+      [{icon: BS2training}],
+      [{icon: Dtraining}],
+      [{icon: BS3training}],
+      ['Sem treino'],
+    ],
+    observations: {
+      first: '• se seu foco for mais quadríceps, faça o A na segunda e sexta e o D na quarta',
+      second: '• se seu foco for mais glúteo, faça o C na segunda e sexta e o D na quarta',
+      third: '• Está com pouco tempo? Use as fichas reduzidas',
+      forth: '',
+      fifth: ''
+    }
+  }
 ]
