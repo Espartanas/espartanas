@@ -10,7 +10,7 @@ import LevelSelect from "../../components/molecule/Series/LevelSelect/LevelSelec
 import { useState } from "react";
 
 export default function Series() {
-  const [selectedLevel, setSelectedLevel] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState('iniciante');
 
   const {data, isLoading} = useQuery(['divisao'], async () => {
     const res = await api.get('/divisao');

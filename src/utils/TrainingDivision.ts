@@ -6,7 +6,14 @@ import { BS1training } from "../assets/icons/BS1-training"
 import { BS2training } from "../assets/icons/BS2-training"
 import { BS3training } from "../assets/icons/BS3-training"
 
-type WeekDaysKeys = 'seg' | 'ter' | 'qua' | 'qui' | 'sex' | 'sab' | 'dom';
+import { AtrainingBig } from "../assets/icons/A-training-big"
+import { BS1trainingBig } from "../assets/icons/BS1-training-big"
+import { BS2trainingBig } from "../assets/icons/BS2-traning-big"
+import { BS3trainingBig } from "../assets/icons/BS3-training-big"
+import { CtrainingBig } from "../assets/icons/C-training-big"
+import { DtrainingBig } from "../assets/icons/D-training-big"
+
+type WeekDaysKeys = 'Seg' | 'Ter' | 'Qua' | 'Qui' | 'Sex' | 'Sab' | 'Dom';
 
 export const trainingDivision = [
   {
@@ -53,18 +60,18 @@ export const trainingDivision = [
   },
 ]
 
-export const days = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'] as WeekDaysKeys[]
+export const days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'] as WeekDaysKeys[]
 
 export const trainingWeeks = [
   {
     id: 1,
     training_days: 3,
     week_days: [
-      [{icon: Dtraining}, {icon: Atraining}],
+      [{icon: DtrainingBig}, {icon: AtrainingBig}],
       ['Sem treino'],
-      [{icon: BS3training}],
+      [{icon: BS3trainingBig}],
       ['Sem treino'],
-      [{icon: Dtraining}, {icon: Ctraining}],
+      [{icon: DtrainingBig}, {icon: CtrainingBig}],
       ['Sem treino'],
       ['Sem treino'],
     ],
@@ -80,11 +87,11 @@ export const trainingWeeks = [
     id: 2,
     training_days: '4',
     week_days: [
-      [{icon: Atraining}],
-      [{icon: BS3training}],
-      [{icon: Ctraining}],
+      [{icon: AtrainingBig}],
+      [{icon: BS3trainingBig}],
+      [{icon: CtrainingBig}],
       ['Sem treino'],
-      [{icon: Dtraining}],
+      [{icon: DtrainingBig}],
       ['Sem treino'],
       ['Sem treino'],
     ],
@@ -100,11 +107,11 @@ export const trainingWeeks = [
     id: 3,
     training_days: '5',
     week_days: [
-      [{icon: Atraining}],
-      [{icon: BS1training}],
-      [{icon: Ctraining}],
-      [{icon: BS2training}],
-      [{icon: Dtraining}],
+      [{icon: AtrainingBig}],
+      [{icon: BS1trainingBig}],
+      [{icon: CtrainingBig}],
+      [{icon: BS2trainingBig}],
+      [{icon: DtrainingBig}],
       ['Sem treino'],
       ['Sem treino'],
     ],
@@ -120,12 +127,12 @@ export const trainingWeeks = [
     id: 4,
     training_days: '6',
     week_days: [
-      [{icon: Atraining}],
-      [{icon: BS1training}],
-      [{icon: Ctraining}],
-      [{icon: BS2training}],
-      [{icon: Dtraining}],
-      [{icon: BS3training}],
+      [{icon: AtrainingBig}],
+      [{icon: BS1trainingBig}],
+      [{icon: CtrainingBig}],
+      [{icon: BS2trainingBig}],
+      [{icon: DtrainingBig}],
+      [{icon: BS3trainingBig}],
       ['Sem treino'],
     ],
     observations: {

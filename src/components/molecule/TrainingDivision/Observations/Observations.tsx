@@ -8,7 +8,7 @@ type Props = {
 }
 
 export default function Observations({trainingDaysAmout}: Props) {
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
 
   return (
     <VStack>
@@ -28,7 +28,7 @@ export default function Observations({trainingDaysAmout}: Props) {
         h={'50px'}
         mt={'30px'}
       >
-        <Text color={'#ffffff'} bold>Clique aqui e veja nossa lista de treinos!</Text>
+        <Text color={'#ffffff'} bold>Fique atento as nossas dicas!</Text>
 
         {
           showInfo

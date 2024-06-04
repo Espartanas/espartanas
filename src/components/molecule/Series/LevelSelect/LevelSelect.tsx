@@ -6,9 +6,7 @@ type Props = {
 }
 
 export default function LevelSelect({ getSelectedLevel }: Props) {
-  const [selected, setSelected] = useState('');
-
-  console.log('1selected', selected)
+  const [selected, setSelected] = useState('iniciante');
 
   useEffect(() => {
     getSelectedLevel(selected);
