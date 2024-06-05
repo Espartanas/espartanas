@@ -10,6 +10,7 @@ import Profile from '../../screens/Profile/Profile';
 import TalkToUs from '../../screens/TalkToUs/TalkToUs';
 import Questions from '../../screens/Questions/Questions';
 import TrainingDivision from '../../screens/TrainingDivision/TrainingDivision';
+import LevelDivision from '../../screens/LevelDivision/LevelDivision';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   FaleConosco: undefined;
   Series: undefined;
   TrainingDivision: undefined;
+  LevelDivision: undefined;
 };
 
 const {Navigator, Screen} = createNativeStackNavigator<RootStackParamList>();
@@ -34,6 +36,7 @@ export const AppRoutes = () => {
       <Screen options={{headerShown: false}} name="Espartanas" component={About} />
       <Screen options={{headerShown: false}} name="Perguntas" component={Questions} />
       <Screen options={{headerShown: false}} name="FaleConosco" component={TalkToUs} />
+      <Screen options={{headerShown: false}} name="LevelDivision" component={LevelDivision} />
       <Screen options={{headerShown: false}} name="TrainingDivision" component={TrainingDivision} />
     </Navigator>
   );

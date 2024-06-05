@@ -127,7 +127,10 @@ export function SignInInput() {
         onPress={() => hasEmail ? signIn(email, password) : validateEmail(email)}
         text={hasEmail ? "Logar" : "Entrar"}
       />
+
       <Pressable
+        alignSelf={'flex-end'}
+        w={'50%'}
         onPress={() => navigation.navigate('forgetPassword' as never)}
       >
         <Text color={'#5968DF'} alignSelf={'flex-end'}>

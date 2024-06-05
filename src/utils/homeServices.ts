@@ -11,10 +11,10 @@ export const homeSerivces = [
     variant: false,
   },
   {
-    screen: 'TrainingLevel',
-    textImage: 'Nivelamento para nossas séries',
+    screen: 'LevelDivision',
+    textImage: 'Como saber o meu nível de treino?',
     image: trainingLevel,
-    textSign: 'Iniciante, intermediário ou avançado, saiba qual treino utilizar',
+    textSign: 'Nivelamento para nossas séries',
     buttonText: 'Assinar',
     variant: true,
   },
