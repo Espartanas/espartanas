@@ -1,5 +1,6 @@
 import { Box, Image, Pressable, Text, VStack } from "native-base";
 import { ArrowRight } from "../../../../assets/icons/arrow-right";
+import { useNavigation } from "@react-navigation/native";
 
 type Props = {
   id: number;
@@ -10,9 +11,10 @@ type Props = {
 }
 
 export default function CardSeries({id, codigo, descricao, image, selectedLevel}: Props) {
+  const navigation = useNavigation();
   return (
     <Pressable
-      onPress={() => { selectedLevel.length === 0 ? console.log(`Selecione um nível de treino`) : console.log(`Treino ${id} selecionado, nível ${selectedLevel}`) }}
+      onPress={() => { selectedLevel.length === 0 ? console.log(`Selecione um nível de treino`) : navigation.navigate({name: 'Training', params: {id, selectedLevel, codigo}} as never) }}
       _pressed={{ opacity: 0.5 }}
       bg={'#000000'}
       borderWidth={1}
