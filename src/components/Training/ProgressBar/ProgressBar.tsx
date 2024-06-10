@@ -18,7 +18,7 @@ export default function ProgressBar({ data, actualExercise }: Props) {
               borderColor={'#ffffff'}
               w={`${100/data.length}%`}
               h={'10px'}
-              bg={actualExercise === index ? '#5968DF' : '#ffffff'}
+              bg={actualExercise >= index ? '#5968DF' : '#ffffff'}
               key={index}
             />
           ))
