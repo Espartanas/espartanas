@@ -7,6 +7,7 @@ import TouchID from 'react-native-touch-id';
 import api from '../../../../services/api';
 import {useAuth} from '../../../../context/authContext';
 import {setToken as asyncToken} from '../../../../services/auth';
+import { ActivityIndicator } from 'react-native';
 
 export function SignInInput() {
   const navigation = useNavigation();
@@ -14,6 +15,8 @@ export function SignInInput() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {hasEmail, setHasEmail, setToken, setAuth, setUser} = useAuth();
+
+  const [loading, setLoading] = useState(false);
 
   // async function handleLoginBiometrics() {
   //   const email: string = (await CustomAsyncStorage.getItem(
@@ -64,6 +67,7 @@ export function SignInInput() {
   }
 
   async function validateEmail(email: string) {
+    setLoading(true)
     api
       .post('/has_email', {email})
       .then(res => {
@@ -75,10 +79,12 @@ export function SignInInput() {
       })
       .catch(error => {
         console.log(error.response.data);
-      });
+      })
+      .finally(() => setLoading(false));
   }
 
   function signIn(email: string, password: string) {
+    setLoading(true)
     api
       .post('/auth', {email, password})
       .then(res => {
@@ -94,6 +100,7 @@ export function SignInInput() {
       .finally(() => {
         setEmail('');
         setHasEmail(false);
+        setLoading(false);
       });
   }
 
@@ -125,7 +132,7 @@ export function SignInInput() {
 
       <Button
         onPress={() => hasEmail ? signIn(email, password) : validateEmail(email)}
-        text={hasEmail ? "Logar" : "Entrar"}
+        text={loading ? <ActivityIndicator size="small" color="#fff" /> : hasEmail ? "Logar" : "Entrar"}
       />
 
       <Pressable
