@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Screen from '../../components/molecule/Screen.molecule';
-import {Avatar, Box, Center, HStack, Image, Input, Pressable, Text, VStack} from 'native-base';
+import {Avatar, Center, Input, Text, VStack} from 'native-base';
 import Button from '../../components/molecule/Button.molecule';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,11 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 import { ProfileFormData, ProfileSchema } from '../../utils/resolvers';
 import { maskDate, maskLetters, maskPhone } from '../../utils/masks';
 import { useAuth } from '../../context/authContext';
-import { ArrowBack } from '../../assets/icons/arrow-back';
 import { Header } from '../../components/molecule/Header.molecule';
+import { logout } from '../../services/auth';
 
 export default function Profile() {
-  const {user} = useAuth();
+  const {user, setAuth} = useAuth();
   const navigation = useNavigation();
 
   const [error, _setError] = useState({
@@ -186,7 +186,14 @@ export default function Profile() {
         <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>
           {phone?.message || error?.phone}
         </Text>
+
         <Button _pressed={{opacity: 0.5}} onPress={handleSubmit(onSubmit)} text='Editar' />
+
+        <Button bg={'#EB6A6A'} mt={'20px'} _pressed={{opacity: 0.5}} onPress={() => {
+          logout()
+          setAuth(false)
+        }} text='Sair' />
+
       </VStack>
     </Screen>
   );
