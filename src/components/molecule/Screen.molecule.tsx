@@ -13,7 +13,7 @@ type Props = IScrollViewProps & {
   flex?: number;
   testIdScroll?: string;
   testID?: string;
-  h?: string;
+  h?: number;
   footer?: boolean;
 };
 
