@@ -1,10 +1,9 @@
 import { Header } from "../../components/molecule/Header.molecule";
 import Screen from "../../components/molecule/Screen.molecule";
 import api from "../../services/api";
-import { useQuery } from "react-query";
 import { ActivityIndicator } from "react-native";
 import ProgressBar from "../../components/Training/ProgressBar/ProgressBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HStack, Pressable, Text } from "native-base";
 import Repetitions from "../../components/molecule/Training2/Repetitions/Repetitions";
 import { Teste } from "../../assets/icons/teste";
@@ -18,20 +17,33 @@ type Props = {
 
 export default function Training2({ route }: Props) {
   const {id, selectedLevel, codigo} = route.params;
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([] as any);
 
   const [actualExercise, setActualExercise] = useState(0);
 
-  const {data, isLoading} = useQuery([''], async () => {
+  function getSeries() {
     const today = new Date();
     const month = today. toLocaleString('pt-br', { month: 'long' })
-    const res = await api.get(`/${selectedLevel}/${month}/${id}`);
-    return res.data.workouts;
-  });
 
-  const [actualRepetition, setActualRepetition] = useState(1);
-  const [review, setReview] = useState(false);
+    api
+      .get(`/${selectedLevel}/${month}/${id}`)
+      .then((response) => {
+        setData(response.data.workouts);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  useEffect(() => {
+    getSeries()
+  }, [])
   
-  if (isLoading) {
+  if (loading) {
     return (
       <Screen>
         <ActivityIndicator style={{marginTop: '50%'}} size="large" color="#ffffff" />
@@ -51,28 +63,25 @@ export default function Training2({ route }: Props) {
     return array
   }
 
-  function changeRepetition() {
-    if (actualRepetition <= getRepetitions()?.length) {
-      setActualRepetition(actualRepetition + 1)
-    }
-  }
-
-  function showExercise(index: number) {
-    if (actualRepetition <= getRepetitions()?.length) {
-      setActualRepetition(index)
-    }
-  }
-
   return (
-    <Screen h={windowHeight} paddingX={'20px'}>
+    <Screen h={windowHeight + 200} paddingX={'20px'}>
       <Header title={codigo} />
 
       <ProgressBar
         data={data}
         actualExercise={actualExercise}
       />
+
+      <Text
+        color={'#ffffff'}
+        fontSize={'18px'}
+        bold
+        mt={'20px'}
+      >
+        {actualExercise + 1} - {data[actualExercise].nome}
+      </Text>
         
-      <Text color={'#ffffff'} fontSize={'16px'} bold textAlign={'justify'} mt={'30px'}>
+      <Text color={'#ffffff'} fontSize={'16px'} bold textAlign={'justify'} mt={'20px'}>
         {data[actualExercise].explicacao}
       </Text>
 

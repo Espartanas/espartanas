@@ -106,6 +106,10 @@ export function SignInInput() {
 
   return (
     <VStack>
+      <Text color={'#ffffff'} bold fontSize={'12px'} mb={'5px'}>
+        Digite o seu e-mail
+      </Text>
+
       <Input
         borderColor={'#ffffff'}
         placeholder="Digite o seu e-mail"
