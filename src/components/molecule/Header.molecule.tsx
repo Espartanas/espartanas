@@ -6,15 +6,20 @@ import {useNavigation} from '@react-navigation/native';
 
 type Props = IHStackProps & {
   title: string;
+  notShowArrowBack?: boolean;
 };
 
-export function Header({title, ...rest}: Props) {
+export function Header({title, notShowArrowBack, ...rest}: Props) {
   const navigation = useNavigation();
   return (
     <HStack alignItems={'center'} justifyContent={'space-between'} mt={'20px'}>
-      <Pressable justifyContent={'center'} w={12} h={12} onPress={() => navigation.goBack()} _pressed={{opacity: 0.5}}>
-        <ArrowBack color='#ffffff' />
-      </Pressable>
+      {
+        notShowArrowBack ?
+        <Text></Text> :
+        <Pressable justifyContent={'center'} w={12} h={12} onPress={() => navigation.goBack()} _pressed={{opacity: 0.5}}>
+          <ArrowBack color='#ffffff' />
+        </Pressable>
+      }
 
       <Text bold fontSize={'28px'} color={'#ffffff'}>
         {title}

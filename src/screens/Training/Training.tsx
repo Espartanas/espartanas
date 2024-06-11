@@ -8,7 +8,6 @@ import { useState } from "react";
 import { Box, Center, Pressable, Text } from "native-base";
 import { ArrowDownSeries } from "../../assets/icons/Arrow-down-series";
 import Button from "../../components/molecule/Button.molecule";
-import { useNavigation } from "@react-navigation/native";
 import Observations from "../../components/Training/Observations/Observations";
 
 type Props = {
@@ -16,28 +15,12 @@ type Props = {
 }
 
 export default function Training({ route }: Props) {
-  const {id, selectedLevel, codigo} = route.params;
-  const navigation = useNavigation();
+  const {data, id, selectedLevel, codigo} = route.params;
 
   const [actualExercise, setActualExercise] = useState(0);
 
-  const {data, isLoading} = useQuery([''], async () => {
-    const today = new Date();
-    const month = today. toLocaleString('pt-br', { month: 'long' })
-    const res = await api.get(`/${selectedLevel}/${month}/${id}`);
-    return res.data.workouts;
-  });
-
   const [actualRepetition, setActualRepetition] = useState(1);
   const [review, setReview] = useState(false);
-  
-  if (isLoading) {
-    return (
-      <Screen>
-        <ActivityIndicator style={{marginTop: '50%'}} size="large" color="#ffffff" />
-      </Screen>
-    )
-  }
 
   function getRepetitions() {
     let totalRepetitions = 0;
@@ -59,7 +42,7 @@ export default function Training({ route }: Props) {
 
   return (
     <Screen paddingX={'20px'}>
-      <Header title={codigo} />
+      <Header notShowArrowBack title={codigo} />
 
       <ProgressBar
         data={data}

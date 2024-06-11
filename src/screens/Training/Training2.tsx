@@ -64,7 +64,7 @@ export default function Training2({ route }: Props) {
   }
 
   return (
-    <Screen h={windowHeight + 200} paddingX={'20px'}>
+    <Screen pb={'120px'} paddingX={'20px'}>
       <Header title={codigo} />
 
       <ProgressBar

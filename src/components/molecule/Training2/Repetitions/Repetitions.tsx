@@ -9,21 +9,21 @@ type Props = {
 }
 
 export default function Repetitions({ getRepetitions, selectedLevel, actualExercise, data }: Props) {
-  const [showRepetition, setShowRepetition] = useState(0);
+  const [showRepetition, setShowRepetition] = useState(1000);
 
   return (
-    <Box h={'380px'} mt={'20px'}>
+    <Box mb={'20px'}>
       {
         getRepetitions().map((repetition, index) => (
           <>
             <Pressable
+              mt={'10px'}
               _pressed={{ opacity: 0.9 }}
               onPress={() => showRepetition === index ? setShowRepetition(1000) : setShowRepetition(index)}
               bgColor={'#5968DF'}
               justifyContent={'center'}
               h={'50px'}
               p={'5px'}
-              mt={'10px'}
               borderTopRadius={'5px'}
               borderBottomRadius={showRepetition === index ? '0px' : '5px'}
               key={index}

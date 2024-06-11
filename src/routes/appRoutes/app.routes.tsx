@@ -13,6 +13,7 @@ import Questions from '../../screens/Questions/Questions';
 import LevelDivision from '../../screens/LevelDivision/LevelDivision';
 import TrainingDivision from '../../screens/TrainingDivision/TrainingDivision';
 import Training2 from '../../screens/Training/Training2';
+import Training3 from '../../screens/Training/Training3';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   Espartanas: undefined;
   FaleConosco: undefined;
   LevelDivision: undefined;
+  TrainingSystem: undefined;
   TrainingDivision: undefined;
 };
 
@@ -37,9 +39,10 @@ export const AppRoutes = () => {
       <Screen options={{headerShown: false}} name="Series" component={Series} />
       <Screen options={{headerShown: false}} name="Perfil" component={Profile} />
       <Screen options={{headerShown: false}} name="Espartanas" component={About} />
-      <Screen options={{headerShown: false}} name="Training" component={Training2} />
+      <Screen options={{headerShown: false}} name="Training" component={Training3} />
       <Screen options={{headerShown: false}} name="Perguntas" component={Questions} />
       <Screen options={{headerShown: false}} name="FaleConosco" component={TalkToUs} />
+      <Screen options={{headerShown: false}} name="TrainingSystem" component={Training} />
       <Screen options={{headerShown: false}} name="LevelDivision" component={LevelDivision} />
       <Screen options={{headerShown: false}} name="TrainingDivision" component={TrainingDivision} />
     </Navigator>
