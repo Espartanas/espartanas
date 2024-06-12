@@ -15,6 +15,7 @@ export default function Repetitions({ getRepetitions, selectedLevel, actualExerc
     <Box mb={'20px'}>
       {
         getRepetitions().map((repetition, index) => (
+          data[actualExercise][`serie${repetition}`].length > 0 &&
           <>
             <Pressable
               mt={'10px'}

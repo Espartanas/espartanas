@@ -22,7 +22,7 @@ export default function Training3({ route }: Props) {
 
   const [actualExercise, setActualExercise] = useState(0);
 
-  const [showModalTreino, setShowModalTreino] = useState(true);
+  const [showModalTreino, setShowModalTreino] = useState(false);
 
   function getSeries() {
     const today = new Date();
@@ -34,7 +34,7 @@ export default function Training3({ route }: Props) {
         setData(response.data.workouts);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
       })
       .finally(() => {
         setLoading(false);
@@ -93,12 +93,15 @@ export default function Training3({ route }: Props) {
         <Pressable alignItems={'center'} justifyContent={'center'} onPress={() => setShowModalTreino(!showModalTreino)} position={'absolute'} bottom={showModalTreino ? '130px' : '0px'} bg={'#000000'} borderTopRadius={'100px'} w={'100%'} h={'40px'} borderWidth={1} borderColor={'#ffffff'}>
           {
             showModalTreino ?
-            <Box>
-              <ArrowDownSeries />
-            </Box> :
-            <Box style={{transform: [{ rotate: '180deg'}]}}>
-              <ArrowDownSeries />
-            </Box>
+              <ArrowDownSeries /> :
+              <HStack alignItems={'center'} justifyContent={'center'}>
+                <Text mr={'5px'} color={'#ffffff'}>
+                  Inicie aqui o seu treino
+                </Text>
+                <Box style={{transform: [{ rotate: '180deg'}]}}>
+                  <ArrowDownSeries />
+                </Box>
+              </HStack>
           }
         </Pressable>
         {
