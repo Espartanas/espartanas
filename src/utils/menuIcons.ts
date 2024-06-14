@@ -4,6 +4,8 @@ import planosIcon from '../assets/images/planos_icon.png';
 import espartanasIcon from '../assets/images/espartanas_icon.png';
 import faleConoscoIcon from '../assets/images/fale_conosco_icon.png';
 import questions from '../assets/images/questions.png';
+import leveling from '../assets/images/nivelamento.png';
+import division from '../assets/images/division.png';
 
 export const menuIcons = [
   {
@@ -35,5 +37,17 @@ export const menuIcons = [
     icon: questions,
     name: 'Perguntas',
     text: 'Acesse aqui as perguntas mais frequentes.'
+  },
+  {
+    icon: leveling,
+    name: 'Nivelamento',
+    nav: 'LevelDivision',
+    text: 'Como saber o meu nível de treino?'
+  },
+  {
+    icon: division,
+    name: 'Divisão de treinos',
+    nav: 'TrainingDivision',
+    text: 'Divisão de treinos semanas na academia.'
   },
 ]
