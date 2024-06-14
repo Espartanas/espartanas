@@ -40,12 +40,12 @@ export function Home() {
               key={index}
               m={'10px'}
               _pressed={{opacity: 0.5}}
-              onPress={() => element.name === 'Series' && user?.premium === 'gratuito' ? navigation.navigate('Planos' as never) : navigation.navigate((element.nav || element.name) as never)}
+              onPress={() => element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos' && user?.premium === 'gratuito' ? navigation.navigate('Planos' as never) : navigation.navigate((element.nav || element.name) as never)}
               rounded={'5px'}
               p={'10px'}
               w={'150px'}
               h={'150px'}
-              bg={element.name === 'Series' ? user?.premium === 'gratuito' ? 'red.300' : '#5968DF' : '#5968DF'} mr={'10px'}
+              bg={element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos' ? user?.premium === 'gratuito' ? 'red.300' : '#5968DF' : '#5968DF'} mr={'10px'}
             >
               <HStack alignItems={'center'} space={2}>
                 <Image tintColor={'#ffffff'} w={8} h={8} source={element.icon} alt={'logo'} />
