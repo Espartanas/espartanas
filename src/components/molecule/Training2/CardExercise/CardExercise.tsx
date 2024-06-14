@@ -13,10 +13,10 @@ type Props = {
 
 export default function CardExercise({ data, index, exercise, getRepetitions, selectedLevel }: Props) {
   const [showSerie, setShowSerie] = useState(false);
-  const [limitCharacter, setLimitCharacter] = useState(50);
+  const [limitCharacter, setLimitCharacter] = useState(100);
 
   function limit (string = '', limit = 0) {  
-    return `${string.substring(0, limit)}${limit === 50 ? "..." : ""}`
+    return `${string.substring(0, limit)}${limit === 100 ? "..." : ""}`
   }
 
   return (
@@ -25,17 +25,18 @@ export default function CardExercise({ data, index, exercise, getRepetitions, se
         _pressed={{ opacity: 0.5 }}
         onPress={() => {
           setShowSerie(!showSerie)
-          showSerie ? setLimitCharacter(50) : setLimitCharacter(10000)
+          showSerie ? setLimitCharacter(100) : setLimitCharacter(10000)
         }}
         w={'100%'}
-        mb={'20px'}
-        p={'10px'}
+        mb={!showSerie ? '20px' : '0'}
         borderRadius={'5px'}
-        bg={'#555C66'}
+        bg={'rgba(85,92,102, 0.5)'}
         borderWidth={1}
-        borderColor={'#ffffff'}
+        borderBottomWidth={0}
+        borderColor={!showSerie ? '#02041B' : '#5968DF'}
+        borderBottomRadius={showSerie ? 0 : '5px'}
       >
-        <HStack mb={'10px'} alignItems={'center'}>
+        <HStack p={'10px'} borderTopRadius={'5px'} bg={'#5968DF'} h={'65px'} alignItems={'center'}>
           <Text mr={'10px'} color={'#ffffff'} fontSize={'32px'}>
             {index + 1}
           </Text>
@@ -53,20 +54,22 @@ export default function CardExercise({ data, index, exercise, getRepetitions, se
 
         {
           exercise.explicacao &&
-          <Text mb={'10px'} color={'#ffffff'} fontSize={'12px'} bold textAlign={'justify'}>
+          <Text p={'10px'} h={!showSerie ? '60px' : 'auto'} color={'#ffffff'} fontSize={'12px'} bold textAlign={'justify'}>
             {limit(exercise.explicacao, limitCharacter)}
           </Text>
         }
 
-        {
-          showSerie ?
-          <Box alignItems={'center'}>
-            <ArrowDownSeries />
-          </Box> :
-          <Box style={{transform: [{ rotate: '180deg'}]}} alignItems={'center'}>
-            <ArrowDownSeries />
-          </Box>
-        }
+        <Box>
+          {
+            showSerie ?
+            <Box my={'10px'} alignItems={'center'}>
+              <ArrowDownSeries />
+            </Box> :
+            <Box my={'10px'} style={{transform: [{ rotate: '180deg'}]}} alignItems={'center'}>
+              <ArrowDownSeries />
+            </Box>
+          }
+        </Box>
         
       </Pressable>
 

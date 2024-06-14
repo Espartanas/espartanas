@@ -84,7 +84,6 @@ export default function Training3({ route }: Props) {
               </Box>
             ))
           }
-        
         </Center>
 
       </Screen>

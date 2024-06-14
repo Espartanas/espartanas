@@ -12,7 +12,12 @@ export default function Repetitions({ getRepetitions, selectedLevel, actualExerc
   const [showRepetition, setShowRepetition] = useState(1000);
 
   return (
-    <Box mb={'20px'}>
+    <Box 
+      borderWidth={1}
+      borderTopWidth={0}
+      borderColor={'#5968DF'}
+      mb={'20px'}
+    >
       {
         getRepetitions().map((repetition, index) => (
           data[actualExercise][`serie${repetition}`].length > 0 &&
@@ -21,38 +26,31 @@ export default function Repetitions({ getRepetitions, selectedLevel, actualExerc
               mt={'10px'}
               _pressed={{ opacity: 0.9 }}
               onPress={() => showRepetition === index ? setShowRepetition(1000) : setShowRepetition(index)}
-              bgColor={'#5968DF'}
               justifyContent={'center'}
-              h={'50px'}
               p={'5px'}
               borderTopRadius={'5px'}
               borderBottomRadius={showRepetition === index ? '0px' : '5px'}
               key={index}
             >
-              <HStack alignItems={'center'}>
+              <HStack>
                 <Text
-                  mx={'10px'}
                   color={'#ffffff'}
                   bold
-                  fontSize={'20px'}
+                  fontSize={'24px'}
+                  mr={'10px'}
                 >
                   {repetition}
                 </Text>
 
-                <Text
-                  color={'#ffffff'}
-                  bold
-                  fontSize={'16px'}
-                >
-                  {selectedLevel} - Repetição {repetition} - Exercício {actualExercise + 1}
+                <Text textAlign={'justify'} w={'90%'} color={'#ffffff'} fontSize={'10px'}>
+                  {data[actualExercise][`serie${repetition}`]}
                 </Text>
               </HStack>
             </Pressable>
             
-            {
+            {/* {
               showRepetition === index &&
               <Box
-                bgColor={'#5968DF'}
                 justifyContent={'center'}
                 px={'15px'}
                 pb={'10px'}
@@ -63,7 +61,7 @@ export default function Repetitions({ getRepetitions, selectedLevel, actualExerc
                   {data[actualExercise][`serie${repetition}`]}
                 </Text>
               </Box>
-            }
+            } */}
           </>
         ))
       }
