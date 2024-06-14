@@ -1,29 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Box, Center, Text} from 'native-base';
 import Screen from '../../components/molecule/Screen.molecule';
-// import {plans} from '../../utils/plans';
-// import {useNavigation} from '@react-navigation/native';
-// import {useApp} from '../../context/appContext';
 import api from '../../services/api';
 import { Header } from '../../components/molecule/Header.molecule';
-// import Carousel from 'react-native-snap-carousel';
 import PlanCard from '../../components/molecule/Plans/PlanCard';
 import { useQuery } from 'react-query';
 import { ActivityIndicator } from 'react-native';
-import { Atraining } from '../../assets/icons/A-training';
 
 export default function Plans() {
-  // const navigation = useNavigation();
-  // const {userData, setUserData} = useApp();
-
-  // const [isAutoPlay, setIsAutoPlay] = useState(false);
-
   const {data, isLoading} = useQuery(['planos'], async () => {
     const res = await api.get('/plans');
     return res.data.planos;
   });
-
-  console.log('data', data)
 
   if (isLoading) {
     return (
@@ -80,30 +68,6 @@ export default function Plans() {
           ))
         }
       </Center>
-      
-      {/* <Center>
-        <Carousel
-          ref={(c) => {carousel = c; }}
-          data={plans}
-          renderItem={({item}) => {
-            return (
-              <PlanCard
-                name={item.name}
-                big_price={item.big_price}
-                little_price={item.little_price}
-                text_discount={item.text_discount}
-                text_installments={item.text_installments}
-                description={item.description}
-              />
-            )
-          }}
-          slideStyle={{paddingVertical: 40}}
-          sliderWidth={380}
-          itemWidth={280}
-          sliderHeight={1000}
-          centerContent
-        />
-      </Center> */}
     </Screen>
   );
 }

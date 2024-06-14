@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAuth} from '../../context/authContext';
 import Screen from '../../components/molecule/Screen.molecule';
-import {Box, HStack, Image, Pressable, ScrollView, Text, VStack} from 'native-base';
+import {Box, Center, HStack, Image, Pressable, ScrollView, Text, VStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import { menuIcons } from '../../utils/menuIcons';
 import Button from '../../components/molecule/Button.molecule';
@@ -11,6 +11,7 @@ import { homeSerivces } from '../../utils/homeServices';
 import FrequentQuestions from '../../components/molecule/Home/FrequentQuestions/FrequentQuestions';
 import { frequentQuestions } from '../../utils/FrequentQuestions';
 import HeaderProfile from '../../components/molecule/Home/HeaderProfile/HeaderProfile';
+import Carousel from 'react-native-snap-carousel';
 
 export function Home() {
   const {user} = useAuth();
@@ -29,9 +30,30 @@ export function Home() {
     console.log(email, password, token)
   }
 
+  console.log(user);
+
   return (
     <Screen flex={1} paddingX={'20px'}>
       <HeaderProfile user={user} />
+
+       {/* <Center>
+        <Carousel
+          ref={(c) => {carousel = c; }}
+          data={[user]}
+          renderItem={({item}: any) => {
+            return (
+              <Box bg={'white'} w={'100%'} h={'120px'}>
+                <Text>{item.firstname}</Text>
+              </Box>
+            )
+          }}
+          slideStyle={{paddingVertical: 40}}
+          sliderWidth={380}
+          itemWidth={280}
+          sliderHeight={1000}
+          centerContent
+        />
+      </Center> */}
 
       <VStack mt={'20px'} alignItems={'center'} justifyContent={'center'} flexDir={'row'} flexWrap={'wrap'}>
         {
@@ -40,12 +62,12 @@ export function Home() {
               key={index}
               m={'10px'}
               _pressed={{opacity: 0.5}}
-              onPress={() => (element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos') && user?.premium === 'gratuito' ? navigation.navigate('Planos' as never) : navigation.navigate((element.nav || element.name) as never)}
+              onPress={() => (element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos') && !user?.premium ? navigation.navigate('Planos' as never) : navigation.navigate((element.nav || element.name) as never)}
               rounded={'5px'}
               p={'10px'}
               w={'150px'}
               h={'150px'}
-              bg={(element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos') ? user?.premium === 'gratuito' ? 'red.300' : '#5968DF' : '#5968DF'} mr={'10px'}
+              bg={(element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos') ? (user?.premium ? '#5968DF' : '#EB6A6A') : '#5968DF'} mr={'10px'}
             >
               <HStack alignItems={'center'} space={2}>
                 <Image tintColor={'#ffffff'} w={8} h={8} source={element.icon} alt={'logo'} />
