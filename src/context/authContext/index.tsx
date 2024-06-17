@@ -1,5 +1,6 @@
 import React, {Dispatch, SetStateAction, useContext} from 'react';
 import {createContext, useState} from 'react';
+import api from '../../services/api';
 
 interface AuthContext {
   user: any;
@@ -10,6 +11,7 @@ interface AuthContext {
   setHasEmail: Dispatch<SetStateAction<boolean>>;
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
+  updateUser: () => void;
 }
 
 export const AuthContext = createContext<AuthContext>({} as AuthContext);
@@ -28,6 +30,12 @@ export function AuthProvider({children}: Props) {
 
   const [token, setToken] = useState('');
 
+  function updateUser() {
+    api.get('/me').then((response) => {
+      setUser(response.data.user);
+    }).catch((err) => console.log(err.response.data));
+  }
+
   return (
     <AuthContext.Provider
       value={
@@ -36,6 +44,7 @@ export function AuthProvider({children}: Props) {
           auth, setAuth,
           hasEmail, setHasEmail,
           token, setToken,
+          updateUser
         } as AuthContext
       }>
       {children}

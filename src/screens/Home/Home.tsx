@@ -14,7 +14,7 @@ import HeaderProfile from '../../components/molecule/Home/HeaderProfile/HeaderPr
 import Carousel from 'react-native-snap-carousel';
 
 export function Home() {
-  const {user} = useAuth();
+  const {user, updateUser} = useAuth();
 
   const navigation = useNavigation();
 
@@ -29,8 +29,6 @@ export function Home() {
 
     console.log(email, password, token)
   }
-
-  console.log(user);
 
   return (
     <Screen flex={1} paddingX={'20px'}>
@@ -62,7 +60,10 @@ export function Home() {
               key={index}
               m={'10px'}
               _pressed={{opacity: 0.5}}
-              onPress={() => (element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos') && !user?.premium ? navigation.navigate('Planos' as never) : navigation.navigate((element.nav || element.name) as never)}
+              onPress={() => {
+                updateUser();
+                (element.name === 'Series' || element.name === 'Nivelamento' || element.name === 'Divisão de treinos') && !user?.premium ? navigation.navigate('Planos' as never) : navigation.navigate((element.nav || element.name) as never)
+              }}
               rounded={'5px'}
               p={'10px'}
               w={'150px'}

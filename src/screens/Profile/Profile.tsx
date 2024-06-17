@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Screen from '../../components/molecule/Screen.molecule';
-import {Avatar, Center, Input, Text, VStack} from 'native-base';
+import {Avatar, Box, Center, Image, Input, Pressable, Text, VStack} from 'native-base';
 import Button from '../../components/molecule/Button.molecule';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,10 +11,33 @@ import { maskDate, maskLetters, maskPhone } from '../../utils/masks';
 import { useAuth } from '../../context/authContext';
 import { Header } from '../../components/molecule/Header.molecule';
 import { logout } from '../../services/auth';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {request, PERMISSIONS} from 'react-native-permissions';
+import { PermissionsAndroid, Platform } from 'react-native';
+
+interface IImagePickerResponse {
+  error: string;
+  uri: string;
+  didCancel: boolean;
+  assets: {
+    uri: string;
+  }[];
+}
+
+const options = {
+  mediaType: 'photo',
+  includeBase64: false,
+  maxHeight: 500,
+  maxWidth: 500,
+};
 
 export default function Profile() {
-  const {user, setAuth} = useAuth();
+  const {user, setAuth, updateUser} = useAuth();
   const navigation = useNavigation();
+
+  const [loading, setLoading] = useState(false);
+
+  const [avatar, setAvatar] = useState(null) as any;
 
   const [error, _setError] = useState({
     firstName: '',
@@ -42,7 +65,6 @@ export default function Profile() {
     }
   });
 
-
   const onSubmit = async (data: ProfileFormData) => {
     const body = {
       firstname: data.firstName,
@@ -52,20 +74,107 @@ export default function Profile() {
       birthdate: data.birthDate,
     };
 
-    console.log(body);
-
     api
       .put('/update_user', body)
       .then(res => navigation.navigate('Home' as never))
       .catch(err => console.log(err.response.data));
   };
 
+  const handleCameraLaunch = async (): Promise<void> => {
+    setLoading(true);
+    launchCamera(options, (response: IImagePickerResponse) => {
+      if (response.assets !== undefined) {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        saveNewImage(imageUri);
+        return;
+      }
+
+      setLoading(false);
+    });
+  };
+
+  const openImagePicker = async (): Promise<void> => {
+    launchImageLibrary(options, (response: IImagePickerResponse) => {
+      setLoading(true);
+
+      if (response.assets !== undefined) {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        saveNewImage(imageUri);
+        return;
+      }
+
+      setLoading(false);
+    });
+  };
+
+  const requestCameraPermission = async (type: string): Promise<void> => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        type === 'camera' ? handleCameraLaunch() : openImagePicker();
+      } else {
+        console.error('Camera permission denied');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  function saveNewImage(image: string) {
+    let bodyFormData = new FormData();
+
+    let imageObject = {
+      uri: image,
+      type: 'image/jpeg',
+      name: 'user.jpg',
+    };
+
+    bodyFormData.append('avatar', imageObject);
+
+    api
+      .post('/update_avatar', bodyFormData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      })
+      .then(res => {
+        updateUser();
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err.response);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  function getFreeTrial() {
+    api
+      .post('/free_trial/1')
+      .then(res => {
+        console.log(res.data)
+        updateUser()
+      })
+      .catch(err => console.log(err.response.data));
+  }
+
   return (
     <Screen paddingX={'20px'}>
       <Header title='Perfil' />
 
-      <Center w={'100%'} h={'100px'} mt={'20px'}>
-        <Avatar w={'100px'} h={'100px'} source={{uri: 'https://i.pravatar.cc/20322'}} />
+      <Box alignItems={'center'} justifyContent={'center'} w={'100%'} h={'100px'} mt={'20px'}>
+        <Avatar w={'100px'} h={'100px'} source={user.avatar ? {uri: `http://aespartana.cloud:3001/avatar_public/${user.avatar}`} : require('../../assets/images/no_image.jpg')} />
+      </Box>
+
+      <Center mt={'20px'} flexDir={'row'}>
+        <Pressable onPress={() => requestCameraPermission('camera')} _pressed={{opacity: 0.5}} alignItems={'center'} w={'80px'} bg={'#5968DF'} p={'5px'} borderLeftRadius={'100px'} borderRightWidth={'1px'} borderRightColor={'#ffffff'}>
+          <Image tintColor={'#ffffff'} w={6} h={6} alt='Camera celular' source={require('../../assets/images/camera.png')} />
+        </Pressable>
+
+        <Pressable onPress={() => requestCameraPermission('library')} _pressed={{opacity: 0.5}} alignItems={'center'} w={'80px'} bg={'#EB6A6A'} p={'5px'} borderRightRadius={'100px'} borderLeftWidth={'1px'} borderLeftColor={'#ffffff'}>
+          <Image tintColor={'#ffffff'} w={6} h={6} alt='Memoria do celular' source={require('../../assets/images/memoria.png')} />
+        </Pressable>
       </Center>
 
       <VStack mt={'30px'}>
@@ -189,10 +298,16 @@ export default function Profile() {
 
         <Button _pressed={{opacity: 0.5}} onPress={handleSubmit(onSubmit)} text='Editar' />
 
+        {
+          !user.premium &&
+          <Button onPress={getFreeTrial} variant borderColorVariant={'gold'} mt={'20px'} text='Free Trial' />
+        } 
+
         <Button bg={'#EB6A6A'} mt={'20px'} _pressed={{opacity: 0.5}} onPress={() => {
           logout()
           setAuth(false)
         }} text='Sair' />
+
 
       </VStack>
     </Screen>
