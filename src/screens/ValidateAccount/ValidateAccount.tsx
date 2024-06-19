@@ -7,7 +7,7 @@ import api from "../../services/api";
 import { useAuth } from "../../context/authContext";
 
 type Props = {
-  route: any
+  route?: any
 }
 
 export default function ValidateAccount({route}: Props) {
@@ -18,11 +18,12 @@ export default function ValidateAccount({route}: Props) {
     code4: '',
   })
 
-  const {setToken, setUser, setAuth} = useAuth()
+  const {setToken, setUser, setAuth, auth, user, updateUser} = useAuth()
 
+  console.log(user)
   function logIn() {
     api
-      .post('/auth', {email: route.params.email, password: route.params.password})
+      .post('/auth', {email: route ? route.params.email : user.email, password: route.params.password})
       .then((res) => {
         setToken(res.data.token)
         setUser(res.data.user)
@@ -35,9 +36,9 @@ export default function ValidateAccount({route}: Props) {
   function handleSubmit() {
     const fullCode = `${code.code1}${code.code2}${code.code3}${code.code4}`
     api
-      .put('/validate_account', {email: route.params.email, code: fullCode})
+      .put('/validate_account', {email: route ? route.params.email : user.email, code: fullCode})
       .then((res) => {
-        console.log('foi');
+        updateUser()
         logIn()
       })
       .catch((err) => console.log(err.response.data))
@@ -131,7 +132,7 @@ export default function ValidateAccount({route}: Props) {
         />
       </HStack>
 
-      <Pressable _pressed={{opacity: 0.5}} onPress={() => console.log('clicked')} alignItems={'center'} justifyContent={'center'} mb={'30px'} flexDirection={'row'}>
+      <Pressable _pressed={{opacity: 0.5}} onPress={() =>api.put('/resend_token', {email: user.email})} alignItems={'center'} justifyContent={'center'} mb={'30px'} flexDirection={'row'}>
         <Text color={'#ffffff'}>Não recebeu o código?</Text>
         <Text ml={'5px'} color={'#5968DF'} textDecorationLine={'underline'}>Clique aqui!</Text>
       </Pressable>

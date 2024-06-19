@@ -5,10 +5,11 @@ import {AppRoutes} from './appRoutes/app.routes';
 import api from '../services/api';
 import { Image, Text } from 'native-base';
 import Screen from '../components/molecule/Screen.molecule';
+import ValidateAccount from '../screens/ValidateAccount/ValidateAccount';
 
 export default function Routes() {
   const [loading, setLoading] = useState(true);
-  const {auth, setUser, setAuth} = useAuth();
+  const {auth, setUser, user, setAuth} = useAuth();
  
   useEffect(() => {
     api
@@ -21,6 +22,8 @@ export default function Routes() {
       .finally(() => setLoading(false));
   }, [])
 
+  console.log(user);
+
   if (loading) {
     return (
       <Screen footer mt={'140px'} alignItems={'center'} justifyContent={'center'}>
@@ -30,5 +33,5 @@ export default function Routes() {
     )
   }
 
-  return auth ? <AppRoutes /> : <AuthRoutes />;
+  return auth ? user.valid_account ? <AppRoutes /> : <ValidateAccount /> : <AuthRoutes />;
 }
