@@ -42,6 +42,7 @@ export default function Screen({
       flex={1}
     >
       <ScrollView
+        keyboardShouldPersistTaps='handled'
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }

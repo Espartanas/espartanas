@@ -7,7 +7,7 @@ import TouchID from 'react-native-touch-id';
 import api from '../../../../services/api';
 import {useAuth} from '../../../../context/authContext';
 import {setToken as asyncToken} from '../../../../services/auth';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Keyboard } from 'react-native';
 
 export function SignInInput() {
   const navigation = useNavigation();
@@ -67,6 +67,7 @@ export function SignInInput() {
   }
 
   async function validateEmail(email: string) {
+    Keyboard.dismiss()
     setLoading(true)
     api
       .post('/has_email', {email})
@@ -84,6 +85,7 @@ export function SignInInput() {
   }
 
   function signIn(email: string, password: string) {
+    Keyboard.dismiss()
     setLoading(true)
     api
       .post('/auth', {email, password})

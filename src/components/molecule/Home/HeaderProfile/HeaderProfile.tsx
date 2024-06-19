@@ -22,7 +22,7 @@ export default function HeaderProfile({user}: Props) {
       <Box alignItems={'center'} justifyContent={'center'} position={'relative'}>
         {
           user.premium &&
-          <Image top={-45} left={-40} zIndex={'2'} position={'absolute'} alt="crown" w={24} h={24} tintColor={'gold'} source={require('../../../../assets/images/crown.png')} />
+          <Image top={-39} left={-39} zIndex={'2'} position={'absolute'} alt="crown" w={24} h={24} tintColor={'gold'} source={require('../../../../assets/images/crown.png')} />
         }
 
         <Avatar w={'80px'} h={'80px'} source={user.avatar ? {uri: `http://aespartana.cloud:3001/avatar_public/${user.avatar}`} : require('../../../../assets/images/no_image.jpg')} />
