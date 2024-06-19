@@ -20,7 +20,6 @@ export default function ValidateAccount({route}: Props) {
 
   const {setToken, setUser, setAuth, auth, user, updateUser} = useAuth()
 
-  console.log(user)
   function logIn() {
     api
       .post('/auth', {email: route ? route.params.email : user.email, password: route.params.password})

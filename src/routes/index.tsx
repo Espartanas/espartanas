@@ -22,8 +22,6 @@ export default function Routes() {
       .finally(() => setLoading(false));
   }, [])
 
-  console.log(user);
-
   if (loading) {
     return (
       <Screen footer mt={'140px'} alignItems={'center'} justifyContent={'center'}>
