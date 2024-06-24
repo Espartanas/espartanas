@@ -14,6 +14,7 @@ import LevelDivision from '../../screens/LevelDivision/LevelDivision';
 import TrainingDivision from '../../screens/TrainingDivision/TrainingDivision';
 import Training2 from '../../screens/Training/Training2';
 import Training3 from '../../screens/Training/Training3';
+import Test from '../../screens/Test/Test';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -27,6 +28,7 @@ export type RootStackParamList = {
   LevelDivision: undefined;
   TrainingSystem: undefined;
   TrainingDivision: undefined;
+  test: undefined;
 };
 
 const {Navigator, Screen} = createNativeStackNavigator<RootStackParamList>();
@@ -45,6 +47,7 @@ export const AppRoutes = () => {
       <Screen options={{headerShown: false}} name="TrainingSystem" component={Training} />
       <Screen options={{headerShown: false}} name="LevelDivision" component={LevelDivision} />
       <Screen options={{headerShown: false}} name="TrainingDivision" component={TrainingDivision} />
+      <Screen options={{headerShown: false}} name="test" component={Test} />
     </Navigator>
   );
 };

@@ -1,17 +1,15 @@
 import React from 'react';
 import {useAuth} from '../../context/authContext';
 import Screen from '../../components/molecule/Screen.molecule';
-import {Box, Center, HStack, Image, Pressable, ScrollView, Text, VStack} from 'native-base';
+import {Box, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import { menuIcons } from '../../utils/menuIcons';
-import Button from '../../components/molecule/Button.molecule';
 import { CustomAsyncStorage } from '../../utils/CustomAsyncStorage';
 import ServicesCard from '../../components/molecule/Home/ServicesCard/ServicesCard';
 import { homeSerivces } from '../../utils/homeServices';
-import FrequentQuestions from '../../components/molecule/Home/FrequentQuestions/FrequentQuestions';
-import { frequentQuestions } from '../../utils/FrequentQuestions';
 import HeaderProfile from '../../components/molecule/Home/HeaderProfile/HeaderProfile';
 import Carousel from 'react-native-snap-carousel';
+import Button from '../../components/molecule/Button.molecule';
 
 export function Home() {
   const {user, updateUser} = useAuth();
@@ -33,6 +31,8 @@ export function Home() {
   return (
     <Screen flex={1} paddingX={'20px'}>
       <HeaderProfile user={user} />
+
+      {/* <Button text='Tela de Teste' onPress={() => navigation.navigate('test' as never)}/> */}
 
        {/* <Center>
         <Carousel

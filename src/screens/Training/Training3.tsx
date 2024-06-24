@@ -1,3 +1,4 @@
+import React from 'react';
 import { Header } from "../../components/molecule/Header.molecule";
 import Screen from "../../components/molecule/Screen.molecule";
 import api from "../../services/api";
@@ -8,6 +9,9 @@ import CardExercise from "../../components/molecule/Training2/CardExercise/CardE
 import Button from "../../components/molecule/Button.molecule";
 import { useNavigation } from "@react-navigation/native";
 import { ArrowDownSeries } from "../../assets/icons/Arrow-down-series";
+
+import { View, StyleSheet } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 type Props = {
   route:any
@@ -23,6 +27,8 @@ export default function Training3({ route }: Props) {
   const [actualExercise, setActualExercise] = useState(0);
 
   const [showModalTreino, setShowModalTreino] = useState(false);
+
+  const [videoURL, setVideoURL] = useState('')
 
   function getSeries() {
     const today = new Date();
@@ -41,7 +47,22 @@ export default function Training3({ route }: Props) {
       });
   }
 
+  function getVideos() {
+    const today = new Date();
+    const month = today. toLocaleString('pt-br', { month: 'long' })
+
+    api
+      .get(`/video/${selectedLevel}/${month}`)
+      .then((response) => {
+        setVideoURL(response.data.iniciante.find((element: any) => element.divisao_id === id).url)
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      })
+  }
+
   useEffect(() => {
+    getVideos()
     getSeries()
   }, [])
   
@@ -69,6 +90,13 @@ export default function Training3({ route }: Props) {
     <>
       <Screen paddingX={'20px'}>
         <Header title={'Treino'} />
+
+        <View style={styles.container}>
+          <WebView
+            source={{ uri: 'https://player.vimeo.com/video/962565900?h=43c0098493' }}
+            style={styles.webview}
+          />
+        </View>
 
         <Center mb={showModalTreino ? '200px' : '100px'} mt={'20px'}>
           {
@@ -115,3 +143,14 @@ export default function Training3({ route }: Props) {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: 200,
+    marginTop: 20,
+  },
+  webview: {
+    flex: 1,
+  },
+});

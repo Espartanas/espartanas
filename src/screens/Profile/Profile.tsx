@@ -13,7 +13,7 @@ import { Header } from '../../components/molecule/Header.molecule';
 import { logout } from '../../services/auth';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import { PermissionsAndroid, Platform } from 'react-native';
+import { ActivityIndicator, PermissionsAndroid, Platform } from 'react-native';
 
 interface IImagePickerResponse {
   error: string;
@@ -74,10 +74,15 @@ export default function Profile() {
       birthdate: data.birthDate,
     };
 
+    setLoading(true);
+
     api
       .put('/update_user', body)
-      .then(res => navigation.navigate('Home' as never))
-      .catch(err => console.log(err.response.data));
+      .then(res => {
+        updateUser();
+      })
+      .catch(err => console.log(err.response.data))
+      .finally(() => setLoading(false));
   };
 
   const handleCameraLaunch = async (): Promise<void> => {
@@ -151,7 +156,7 @@ export default function Profile() {
 
   function getFreeTrial() {
     api
-      .post('/free_trial/1')
+      .post('/free_trial/15')
       .then(res => {
         console.log(res.data)
         updateUser()
@@ -296,7 +301,7 @@ export default function Profile() {
           {phone?.message || error?.phone}
         </Text>
 
-        <Button _pressed={{opacity: 0.5}} onPress={handleSubmit(onSubmit)} text='Editar' />
+        <Button _pressed={{opacity: 0.5}} onPress={handleSubmit(onSubmit)} text={loading ? <ActivityIndicator size="small" color="#ffffff" /> : 'Editar'} />
 
         {
           !user.premium &&
