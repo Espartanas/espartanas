@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Screen from '../../components/molecule/Screen.molecule';
-import {Avatar, Box, Center, Image, Input, Pressable, Text, VStack} from 'native-base';
+import {Avatar, Box, Center, Image, Input, Pressable, Text, VStack, useToast} from 'native-base';
 import Button from '../../components/molecule/Button.molecule';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -34,6 +34,8 @@ const options = {
 export default function Profile() {
   const {user, setAuth, updateUser} = useAuth();
   const navigation = useNavigation();
+
+  const toast = useToast();
 
   const [loading, setLoading] = useState(false);
 
@@ -79,9 +81,22 @@ export default function Profile() {
     api
       .put('/update_user', body)
       .then(res => {
+        console.log(res.data)
+        toast.show({
+          description: res.data.message,
+          placement: 'top',
+          bgColor: 'green.700',
+        })
         updateUser();
       })
-      .catch(err => console.log(err.response.data))
+      .catch(err => {
+        toast.show({
+          description: err.response.data.message,
+          placement: 'top',
+          bgColor: 'red.700',
+        })
+        console.log(err.response.data)
+      })
       .finally(() => setLoading(false));
   };
 
@@ -143,11 +158,19 @@ export default function Profile() {
         headers: {'Content-Type': 'multipart/form-data'},
       })
       .then(res => {
+        toast.show({
+          description: "Avatar atualizado com sucesso!",
+          placement: 'top',
+          bgColor: 'green.700',
+        })
         updateUser();
-        console.log(res)
       })
       .catch(err => {
-        console.error(err.response);
+        toast.show({
+          description: "Error ao atualizar o avatar! Tente em alguns minutos!",
+          placement: 'top',
+          bgColor: 'red.700',
+        })
       })
       .finally(() => {
         setLoading(false);
@@ -156,12 +179,24 @@ export default function Profile() {
 
   function getFreeTrial() {
     api
-      .post('/free_trial/15')
+      .post('/free_trial/1')
       .then(res => {
         console.log(res.data)
+        toast.show({
+          description: res.data.message,
+          placement: 'top',
+          bgColor: 'green.700',
+        })
         updateUser()
       })
-      .catch(err => console.log(err.response.data));
+      .catch(err => {
+        toast.show({
+          description: err.response.data.message,
+          placement: 'top',
+          bgColor: 'red.700',
+        })
+        console.log(err.response.data)
+      });
   }
 
   return (
