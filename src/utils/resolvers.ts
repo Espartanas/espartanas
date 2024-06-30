@@ -9,7 +9,7 @@ export const RegisterSchema = yup.object({
   birthDate: yup
     .string()
     .required('Necessário preencher a sua data de nascimento.'),
-  phone: yup.string().required('Necessário preencher o seu telefone.'),
+  cpf: yup.string().required('Necessário preencher o seu telefone.'),
   email: yup
     .string()
     .required('Necessário preencher o seu e-mail.')
@@ -23,7 +23,8 @@ export const ProfileSchema = yup.object({
   lastName: yup.string(),
   phone: yup.string(),
   email: yup.string().email('O e-mail deve possuir um formato válido.'),
-  birthDate: yup.string()
+  birthDate: yup.string(),
+  cpf: yup.string()
 });
 
 export type ProfileFormData = yup.InferType<typeof ProfileSchema>;

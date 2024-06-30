@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileFormData, ProfileSchema } from '../../utils/resolvers';
-import { maskDate, maskLetters, maskPhone } from '../../utils/masks';
+import { maskDate, maskDocument, maskLetters, maskPhone } from '../../utils/masks';
 import { useAuth } from '../../context/authContext';
 import { Header } from '../../components/molecule/Header.molecule';
 import { logout } from '../../services/auth';
@@ -34,6 +34,8 @@ const options = {
 export default function Profile() {
   const {user, setAuth, updateUser} = useAuth();
   const navigation = useNavigation();
+
+  console.log(user)
 
   const toast = useToast();
 
@@ -64,6 +66,7 @@ export default function Profile() {
       email: user.email,
       phone: user.phone,
       birthDate: user.birthdate,
+      cpf: user.cpf,
     }
   });
 
@@ -74,6 +77,7 @@ export default function Profile() {
       email: data.email,
       phone: data.phone,
       birthdate: data.birthDate,
+      cpf: data.cpf,
     };
 
     setLoading(true);
@@ -292,6 +296,29 @@ export default function Profile() {
           render={({field: {onChange, value}}) => (
             <Input
               p={'5px'}
+              mb="5px"
+              borderColor={'#ffffff'}
+              bg={'#ffffff'}
+              placeholderTextColor={'gray.700'}
+              placeholder="Telefone"
+              onChangeText={text => onChange(maskPhone(text))}
+              value={value}
+              maxLength={15}
+              _focus={{bg: '#ffffff'}}
+            />
+          )}
+          name="phone"
+        />
+
+        <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>
+          {phone?.message || error?.phone}
+        </Text>
+
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <Input
+              p={'5px'}
               mb={"5px"}
               color={'red.500'}
               borderColor={'#ffffff'}
@@ -321,15 +348,15 @@ export default function Profile() {
               borderColor={'#ffffff'}
               bg={'#ffffff'}
               placeholderTextColor={'gray.700'}
-              placeholder="Telefone"
-              onChangeText={text => onChange(maskPhone(text))}
+              placeholder="CPF"
+              onChangeText={text => onChange(maskDocument(text))}
               value={value}
               maxLength={15}
               _focus={{bg: '#ffffff'}}
               isReadOnly
             />
           )}
-          name="phone"
+          name="cpf"
         />
 
         <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>

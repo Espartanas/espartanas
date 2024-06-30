@@ -1,4 +1,4 @@
-import { Center, HStack, Image, Input, NumberInput, Pressable, Text, VStack } from "native-base";
+import { Center, HStack, Image, Input, NumberInput, Pressable, Text, VStack, useToast } from "native-base";
 import Screen from "../../components/molecule/Screen.molecule";
 import Button from "../../components/molecule/Button.molecule";
 import { useState } from "react";
@@ -18,6 +18,7 @@ export default function ValidateAccount({route}: Props) {
     code4: '',
   })
 
+  const toast = useToast()
   const {setToken, setUser, setAuth, auth, user, updateUser} = useAuth()
 
   function logIn() {
@@ -38,9 +39,21 @@ export default function ValidateAccount({route}: Props) {
       .put('/validate_account', {email: route ? route.params.email : user.email, code: fullCode})
       .then((res) => {
         updateUser()
+        toast.show({
+          description: res.data.message,
+          placement: 'top',
+          bgColor: 'green.700',
+        })
         logIn()
       })
-      .catch((err) => console.log(err.response.data))
+      .catch((err) => {
+        toast.show({
+          description: err.response.data.message,
+          placement: 'top',
+          bgColor: 'red.700',
+        })
+        console.log(err.response.data)
+      })
   }
 
   return (

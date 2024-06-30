@@ -8,7 +8,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {RegisterFormData, RegisterSchema} from '../../utils/resolvers';
 import Button from '../../components/molecule/Button.molecule';
-import {maskDate, maskLetters, maskPhone} from '../../utils/masks';
+import {maskDate, maskLetters, maskDocument} from '../../utils/masks';
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
 
@@ -75,7 +75,7 @@ export function Register() {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    cpf: '',
     password: '',
     birthDate: '',
   });
@@ -84,7 +84,7 @@ export function Register() {
     control,
     handleSubmit,
     formState: {
-      errors: {firstName, lastName, email, phone, birthDate},
+      errors: {firstName, lastName, email, cpf, birthDate},
     },
   } = useForm({
     resolver: yupResolver(RegisterSchema),
@@ -95,7 +95,7 @@ export function Register() {
       firstname: data.firstName,
       lastname: data.lastName,
       email: data.email,
-      phone: data.phone,
+      cpf: data.cpf,
       birthdate: data.birthDate,
       password,
       privacypolitics: !handleDisableButton(),
@@ -181,18 +181,19 @@ export function Register() {
               borderColor={'#ffffff'}
               bg={'#ffffff'}
               placeholderTextColor={'gray.700'}
-              placeholder="Telefone"
-              onChangeText={text => onChange(maskPhone(text))}
+              placeholder="CPF"
+              keyboardType="numeric"
+              onChangeText={text => onChange(maskDocument(text))}
               value={value}
               maxLength={15}
               _focus={{bg: '#ffffff'}}
             />
           )}
-          name="phone"
+          name="cpf"
         />
 
         <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>
-          {phone?.message || error?.phone}
+          {cpf?.message || error?.cpf}
         </Text>
 
         <Controller
