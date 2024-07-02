@@ -50,13 +50,14 @@ export default function Profile() {
     phone: '',
     password: '',
     birthDate: '',
+    cpf: '',
   });
 
   const {
     control,
     handleSubmit,
     formState: {
-      errors: {firstName, lastName, email, phone, birthDate},
+      errors: {firstName, lastName, email, phone, birthDate, cpf},
     },
   } = useForm({
     resolver: yupResolver(ProfileSchema),
@@ -64,7 +65,7 @@ export default function Profile() {
       firstName: user.firstname,
       lastName: user.lastname,
       email: user.email,
-      phone: user.phone,
+      phone: user.phone || '',
       birthDate: user.birthdate,
       cpf: user.cpf,
     }
@@ -360,7 +361,7 @@ export default function Profile() {
         />
 
         <Text mb={'10px'} bold fontSize={'12px'} color={'red.500'}>
-          {phone?.message || error?.phone}
+          {cpf?.message || error?.cpf}
         </Text>
 
         <Button _pressed={{opacity: 0.5}} onPress={handleSubmit(onSubmit)} text={loading ? <ActivityIndicator size="small" color="#ffffff" /> : 'Editar'} />

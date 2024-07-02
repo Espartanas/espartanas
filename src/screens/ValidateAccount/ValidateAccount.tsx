@@ -48,7 +48,7 @@ export default function ValidateAccount({route}: Props) {
       })
       .catch((err) => {
         toast.show({
-          description: err.response.data.message,
+          description: err.response.data.error,
           placement: 'top',
           bgColor: 'red.700',
         })
