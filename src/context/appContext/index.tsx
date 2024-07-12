@@ -6,9 +6,21 @@ interface IUserData {
   plan: number;
 }
 
+export interface ICreditCard {
+  holderName: string;
+  number: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvc: string;
+}
+
 interface AppContext {
   userData: IUserData;
   setUserData: React.Dispatch<React.SetStateAction<IUserData>>;
+  paymentData: any;
+  setPaymentData: React.Dispatch<React.SetStateAction<any>>;
+  creditCardData: ICreditCard;
+  setCreditCardData: React.Dispatch<React.SetStateAction<ICreditCard>>;
 }
 
 export const AppContext = createContext<AppContext>({} as AppContext);
@@ -24,12 +36,18 @@ export function AppProvider({children}: Props) {
     category: 10,
     plan: 10,
   } as IUserData);
+
+  const [paymentData, setPaymentData] = useState({})
+
+  const [creditCardData, setCreditCardData] = useState<ICreditCard>({} as ICreditCard);
+
   return (
     <AppContext.Provider
       value={
         {
-          userData,
-          setUserData,
+          userData, setUserData,
+          paymentData, setPaymentData,
+          creditCardData, setCreditCardData,
         } as AppContext
       }>
       {children}

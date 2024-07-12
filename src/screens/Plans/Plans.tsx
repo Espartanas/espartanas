@@ -6,6 +6,7 @@ import { Header } from '../../components/molecule/Header.molecule';
 import PlanCard from '../../components/molecule/Plans/PlanCard';
 import { useQuery } from 'react-query';
 import { ActivityIndicator } from 'react-native';
+import { plans } from '../../utils/plans';
 
 export default function Plans() {
   const {data, isLoading} = useQuery(['planos'], async () => {
@@ -51,23 +52,35 @@ export default function Plans() {
         </Text>
       </Box>
 
-      <Center my={'50px'}>
+      <Center p={'0px'} gap={'20px'} flexDir={'row'}flexWrap={'wrap'} my={'50px'}>
         {
-          data.map((element: any, index: number) => (
+          plans.map((element: any, index: number) => (
             <PlanCard
               key={index}
               name={element.name}
               big_price={element.big_price}
-              little_price={element.little_price}
+              big_price_number={element.big_price_number}
               text_discount={element.text_discount}
-              text_installments={element.text_installments}
-              description={element.description}
-              big_square_color={element.big_square_color}
-              little_square_color={element.little_square_color}
+              premium_points={element.premium_points}
             />
           ))
         }
       </Center>
+
+      <Box mb={'50px'}>
+        <Text color={'#ffffff'} fontSize={'14px'}>Parcele dos planos de acordo com:</Text>
+        <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
+          • 90 dias (trimestral) - Parcelamento em 3x sem juros
+        </Text>
+
+        <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
+          • 180 dias (semestral) - Parcelamento em 6x sem juros
+        </Text>
+
+        <Text mt={'10px'} color={'#ffffff'} fontSize={'14px'}>
+          • 360 dias (anual) - Parcelamento em 6x sem juros
+        </Text>
+      </Box>
     </Screen>
   );
 }
