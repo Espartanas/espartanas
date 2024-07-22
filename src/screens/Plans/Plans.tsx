@@ -9,19 +9,6 @@ import { ActivityIndicator } from 'react-native';
 import { plans } from '../../utils/plans';
 
 export default function Plans() {
-  const {data, isLoading} = useQuery(['planos'], async () => {
-    const res = await api.get('/plans');
-    return res.data.planos;
-  });
-
-  if (isLoading) {
-    return (
-      <Screen>
-        <ActivityIndicator style={{marginTop: '50%'}} size="large" color="#ffffff" />
-      </Screen>
-    );
-  }
-
   return (
     <Screen paddingX={'20px'} flex={1}>
       <Header title='Planos' />

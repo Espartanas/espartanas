@@ -18,6 +18,7 @@ import Training3 from '../../screens/Training/Training3';
 import Test from '../../screens/Test/Test';
 import AddCreditCard from '../../screens/AddCreditCard/AddCreditCard';
 import AddAddressData from '../../screens/AddAddressData/AddAddressData';
+import PaymentDetails from '../../screens/PaymentDetails/PaymentDetails';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -33,6 +34,7 @@ export type RootStackParamList = {
   AddCreditCard: undefined;
   TrainingSystem: undefined;
   AddAddressData: undefined;
+  PaymentDetails: undefined;
   TrainingDivision: undefined;
   test: undefined;
 };
@@ -55,6 +57,7 @@ export const AppRoutes = () => {
       <Screen name="LevelDivision" component={LevelDivision} />
       <Screen name="AddCreditCard" component={AddCreditCard} />
       <Screen name="AddAddressData" component={AddAddressData} />
+      <Screen name="PaymentDetails" component={PaymentDetails} />
       <Screen name="TrainingDivision" component={TrainingDivision} />
       <Screen name="test" component={Test} />
     </Navigator>

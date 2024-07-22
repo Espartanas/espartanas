@@ -7,6 +7,7 @@ import {theme} from './src/theme/theme';
 import Routes from './src/routes';
 import {AuthProvider} from './src/context/authContext';
 import {AppProvider} from './src/context/appContext';
+import PaymentDetails from './src/screens/PaymentDetails/PaymentDetails';
 
 if (__DEV__) {
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
