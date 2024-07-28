@@ -17,8 +17,10 @@ export default function PaymentMethod({route}: Props) {
   const navigation = useNavigation();
   const toast = useToast();
 
+  const toast = useToast();
+
   function payment() {
-    if (paymentType === 'credit') {
+    if (paymentType === 'CREDIT') {
       return  
     }
 
@@ -76,7 +78,7 @@ export default function PaymentMethod({route}: Props) {
       >
         <Select.Item label="Boleto" value="BOLETO" />
         <Select.Item label="Pix" value="PIX" />
-        <Select.Item label="Cartão de Crédito" value="credit" />
+        <Select.Item label="Cartão de Crédito" value="CREDIT" />
       </Select>
 
       {

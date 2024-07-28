@@ -12,13 +12,12 @@ import Training from '../../screens/Training/Training';
 import Questions from '../../screens/Questions/Questions';
 import PaymentMethod from '../../screens/PaymentMethod/PaymentMethod';
 import LevelDivision from '../../screens/LevelDivision/LevelDivision';
-import TrainingDivision from '../../screens/TrainingDivision/TrainingDivision';
-import Training2 from '../../screens/Training/Training2';
-import Training3 from '../../screens/Training/Training3';
-import Test from '../../screens/Test/Test';
 import AddCreditCard from '../../screens/AddCreditCard/AddCreditCard';
 import AddAddressData from '../../screens/AddAddressData/AddAddressData';
 import PaymentDetails from '../../screens/PaymentDetails/PaymentDetails';
+import Training3 from '../../screens/Training/Training3';
+import TrainingDivision from '../../screens/TrainingDivision/TrainingDivision';
+import Test from '../../screens/Test/Test';
 
 export type RootStackParamList = {
   Home: undefined;
