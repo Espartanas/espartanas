@@ -1,9 +1,10 @@
-import { Box, List, Pressable, Text, VStack } from "native-base";
+import { Box, Image, List, Pressable, Text, VStack } from "native-base";
 import { Header } from "../../components/molecule/Header.molecule";
 import Screen from "../../components/molecule/Screen.molecule";
 import { Linking } from "react-native";
 import Button from "../../components/molecule/Button.molecule";
 import { useNavigation } from "@react-navigation/native";
+import congrats from '../../assets/images/congrats.png'
 
 type Props = {
   route: any
@@ -18,6 +19,8 @@ export default function PaymentDetails({route}: Props) {
       <Header title="Detalhes do pagamento" />
 
       <VStack>
+        <Image mt={'40px'} w={'100%'} h={'180px'} alignSelf={'center'} source={congrats} alt="congrats"/>
+
         <Text my={'20px'} textAlign={'center'} fontWeight={'700'} fontSize={'20px'} color={'#ffffff'}>Você está quase lá!</Text>
         
         <Text textAlign={'center'} fontWeight={'400'} fontSize={'14px'} color={'#ffffff'}>Realize o pagamento do boleto acessando o link abaixo.</Text>

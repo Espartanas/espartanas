@@ -15,12 +15,12 @@ export default function PaymentMethod({route}: Props) {
   const [paymentType, setPaymentType] = useState("");
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const toast = useToast();
 
   const toast = useToast();
 
   function payment() {
     if (paymentType === 'CREDIT') {
+      navigation.navigate('AddCreditCard' as never);
       return  
     }
 
@@ -83,7 +83,7 @@ export default function PaymentMethod({route}: Props) {
 
       {
         paymentType !== '' &&
-        <Button onPress={() => {paymentType === 'credit' ? navigation.navigate('AddCreditCard' as never) : payment()}} text={loading ? <ActivityIndicator size="small" color="#ffffff" /> : (paymentType === 'credit' ? "Digitar Cartão" : "Gerar Boleto")} />
+        <Button onPress={() => {paymentType === 'credit' ? navigation.navigate('AddCreditCard' as never) : payment()}} text={loading ? <ActivityIndicator size="small" color="#ffffff" /> : (paymentType === 'CREDIT' ? "Digitar Cartão" : "Gerar Boleto")} />
       }
     </Screen>
   )

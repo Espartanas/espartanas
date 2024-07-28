@@ -2,7 +2,7 @@ import axios from 'axios';
 import {getToken} from '../auth';
 
 const api = axios.create({
-  baseURL: 'http://aespartana.cloud:3001',
+  baseURL: 'https://aespartana.cloud',
   // baseURL: 'http://192.168.1.103:3001/',
 });
 
@@ -16,3 +16,5 @@ api.interceptors.request.use(async config => {
 });
 
 export default api;
+
+// pay_xebyv14by8gro0ar
