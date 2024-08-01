@@ -11,7 +11,10 @@ export interface ICreditCard {
   number: string;
   expiryMonth: string;
   expiryYear: string;
-  cvc: string;
+  ccv: string;
+  installmentCount: string;
+  installmentValue: number;
+  cpfCnpj?: string;
 }
 
 interface AppContext {

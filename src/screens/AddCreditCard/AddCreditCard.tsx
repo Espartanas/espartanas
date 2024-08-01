@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Animated, ActivityIndicator} from 'react-native';
-import {useToast, View} from 'native-base';
+import {Box, CheckIcon, HStack, Select, useToast, View} from 'native-base';
 
 import { useApp } from '../../context/appContext';
 
@@ -17,7 +17,11 @@ import CVCCard from '../../components/molecule/AddCreditCard/CVCCArd';
 import Screen from '../../components/molecule/Screen.molecule';
 import { Header } from '../../components/molecule/Header.molecule';
 
-const CreditCardForm = () => {
+type Props = {
+  route: any,
+}
+
+const CreditCardForm = ({route}: Props) => {
   const navigation = useNavigation();
   const toast = useToast();
 
@@ -28,9 +32,13 @@ const CreditCardForm = () => {
     number: '',
     expireDate: '',
     cvc: '',
+    cpfCnpj: '',
   });
+
   const [flag, setFlag] = useState<boolean | string>('');
   const [isCVCVisible, setIsCVCVisible] = useState<boolean>(false);
+
+  const [numberInstallments, setNumberInstallments] = useState('1');
 
   const flipAnimation = useRef<Animated.Value>(new Animated.Value(0)).current;
 
@@ -92,7 +100,7 @@ const CreditCardForm = () => {
   }
 
   const onSubmit = () => {
-    if (!creditCard.name || !creditCard.number || !creditCard.expireDate || !creditCard.cvc) {
+    if (!creditCard.name || !creditCard.number || !creditCard.expireDate || !creditCard.cvc || !creditCard.cpfCnpj) {
       toast.show({
         title: 'Por favor, preencha todos os campos.',
         placement: 'top',
@@ -128,6 +136,18 @@ const CreditCardForm = () => {
         placement: 'top',
         bgColor: 'red.500',
       })
+
+      return
+    }
+
+    if (creditCard.cpfCnpj.length < 11 || creditCard.cpfCnpj.length > 15) {
+      toast.show({
+        title: 'Digite um CPF ou CNPJ válido para o cartão de crédito.',
+        placement: 'top',
+        bgColor: 'red.500',
+      })
+
+      return
     }
 
     const card = {
@@ -135,12 +155,15 @@ const CreditCardForm = () => {
       number: creditCard.number,
       expiryMonth: creditCard.expireDate.substring(0, 2),
       expiryYear: '20' + creditCard.expireDate.substring(3, 5),
-      cvc: creditCard.cvc,
+      ccv: creditCard.cvc,
+      cpfCnpj: creditCard.cpfCnpj,
+      installmentCount: numberInstallments,
+      installmentValue: route.params.big_price_number / +numberInstallments,
     }
 
     setCreditCardData(card);
 
-    navigation.navigate('AddAddressData' as never);
+    navigation.navigate({name: 'AddAddressData', params: {...route.params}} as never);
   };
 
   useEffect(() => {
@@ -189,7 +212,7 @@ const CreditCardForm = () => {
   };
 
   return (
-    <Screen paddingX={'20px'} flex={1} mt={'30px'}>
+    <Screen paddingX={'20px'} mt={'20px'}>
       <Header title={'Cartão de Crédito'} />
 
       <Animated.View
@@ -243,7 +266,20 @@ const CreditCardForm = () => {
           value={creditCard.name}
         />
 
-        <View w={'100%'}>
+        <Input
+          style={{
+            backgroundColor: 'white',
+          }}
+          testID="cpfCnpj"
+          placeholder="CPF ou CNPJ titular"
+          keyboardType="numeric"
+          onChangeText={text => {
+            setCreditCard({...creditCard, cpfCnpj: text});
+          }}
+          value={creditCard.cpfCnpj}
+        />
+
+        <View>
           <Input
             style={{
               backgroundColor: 'white',
@@ -263,7 +299,6 @@ const CreditCardForm = () => {
               backgroundColor: 'white',
             }}
             w={'100%'}
-            testID="cvc"
             placeholder="CVC"
             onChangeText={text => {
               setCreditCard({...creditCard, cvc: text});
@@ -275,8 +310,30 @@ const CreditCardForm = () => {
             maxLength={4}
           />
         </View>
+        
+        <Box>
+          <Select
+            mb={'20px'}
+            bg={'white'}
+            w={'100%'}
+            selectedValue={numberInstallments}
+            minWidth="200"
+            accessibilityLabel="Número de parcelas"
+            placeholder="Número de parcelas"
+            _selectedItem={{bg: "white", endIcon: <CheckIcon size="5" />}}
+            onValueChange={itemValue => setNumberInstallments(itemValue)}
+          >
+            <Select.Item label={`1x parcela de R$ ${route.params.big_price_number},00`} value="1" />
+            <Select.Item label={`2x parcela de R$ ${(route.params.big_price_number / 2).toFixed(2)}`} value="2" />
+            <Select.Item label={`3x parcela de R$ ${(route.params.big_price_number / 3).toFixed(2)}`} value="3" />
+            <Select.Item label={`4x parcela de R$ ${(route.params.big_price_number / 4).toFixed(2)}`} value="4" />
+            <Select.Item label={`5x parcela de R$ ${(route.params.big_price_number / 5).toFixed(2)}`} value="5" />
+            <Select.Item label={`6x parcela de R$ ${(route.params.big_price_number / 6).toFixed(2)}`} value="6" />
+          </Select>
+        </Box>
 
         <Button
+          mb={'20px'}
           text="Adicionar Cartão"
           onPress={() => (onSubmit())}
         />

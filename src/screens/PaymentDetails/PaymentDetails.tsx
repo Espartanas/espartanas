@@ -25,7 +25,7 @@ export default function PaymentDetails({route}: Props) {
         
         <Text textAlign={'center'} fontWeight={'400'} fontSize={'14px'} color={'#ffffff'}>Realize o pagamento do boleto acessando o link abaixo.</Text>
       
-        <Pressable _pressed={{ opacity: 0.9 }} onPress={() => Linking.openURL(route.params.dados.bankSlipUrl)}>
+        <Pressable _pressed={{ opacity: 0.9 }} onPress={() => Linking.openURL(route.params.dados.billingType === "PIX" ? route.params.dados.invoiceUrl : route.params.dados.bankSlipUrl)}>
           <Text
             textAlign={'center'}
             my={'20px'}
@@ -34,7 +34,7 @@ export default function PaymentDetails({route}: Props) {
             color={'#7887fa'}
             textDecorationLine={'underline'}
           >
-            Link download boleto
+             {route.params.dados.billingType === "PIX" ? "Link para pagamento pix" : "Link para download do boleto"}
           </Text>
         </Pressable>
       </VStack>

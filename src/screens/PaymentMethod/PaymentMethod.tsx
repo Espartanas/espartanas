@@ -20,7 +20,7 @@ export default function PaymentMethod({route}: Props) {
 
   function payment() {
     if (paymentType === 'CREDIT') {
-      navigation.navigate('AddCreditCard' as never);
+      navigation.navigate({name: 'AddCreditCard', params: {...route.params}} as never)
       return  
     }
 
@@ -30,29 +30,29 @@ export default function PaymentMethod({route}: Props) {
       points: route.params.premium_points
     }
 
-    if (paymentType === 'BOLETO') {
-      setLoading(true);
-      api
-        .post('/payment', obj)
-        .then((res) => {
-          toast.show({
-            description: res.data.message,
-            placement: 'top',
-            bgColor: 'green.700',
-          })
-          navigation.navigate({name: 'PaymentDetails', params: {...res.data}} as never)
+
+    setLoading(true);
+    api
+      .post('/payment', obj)
+      .then((res) => {
+        toast.show({
+          description: res.data.message,
+          placement: 'top',
+          bgColor: 'green.700',
         })
-        .catch((error) => {
-          toast.show({
-            description: error.response.data.error || error.response.data.message,
-            placement: 'top',
-            bgColor: 'red.700',
-          })
+        console.log(res.data);
+        navigation.navigate({name: 'PaymentDetails', params: {...res.data}} as never)
+      })
+      .catch((error) => {
+        toast.show({
+          description: error.response.data.error || error.response.data.message,
+          placement: 'top',
+          bgColor: 'red.700',
         })
-        .finally(() => {
-          setLoading(false);
-        })
-    }
+      })
+      .finally(() => {
+        setLoading(false);
+      })
   }
 
   return (
@@ -83,7 +83,16 @@ export default function PaymentMethod({route}: Props) {
 
       {
         paymentType !== '' &&
-        <Button onPress={() => {paymentType === 'credit' ? navigation.navigate('AddCreditCard' as never) : payment()}} text={loading ? <ActivityIndicator size="small" color="#ffffff" /> : (paymentType === 'CREDIT' ? "Digitar Cartão" : "Gerar Boleto")} />
+        <Button onPress={() => {
+          paymentType === 'credit' ? navigation.navigate('AddCreditCard' as never) : payment()
+        }}
+        text={
+          loading ? <ActivityIndicator size="small" color="#ffffff" /> : 
+          (
+            paymentType === 'CREDIT' ? "Digitar Cartão" : 
+            paymentType === "BOLETO" ? "Gerar Boleto" : "Gerar Pix"
+          )
+        } />
       }
     </Screen>
   )
